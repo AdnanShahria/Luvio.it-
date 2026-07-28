@@ -1,0 +1,22 @@
+{
+  "name": "@luvio/backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "dev": "wrangler dev --port 8788",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@luvio/shared": "*",
+    "hono": "^4.4.0",
+    "drizzle-orm": "^0.31.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240620.0",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0"
+  }
+}
