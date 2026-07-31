@@ -18,11 +18,16 @@ export const metadata: Metadata = {
     title: 'Luvio — Your Neighborhood Marketplace',
     description: 'Find local jobs, buy & sell items, and connect with your community.',
   },
-  viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
+};
+
+export const viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#020617' },
+    { media: '(prefers-color-scheme: dark)', color: '#ffffff' },
   ],
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -33,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico?v=2" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
@@ -53,11 +58,8 @@ function ThemeScript() {
   const script = `
     (function() {
       try {
-        var theme = localStorage.getItem('luvio-theme');
-        if (!theme) {
-          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('luvio-theme', 'light');
       } catch(e) {}
     })();
   `;

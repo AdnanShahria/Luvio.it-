@@ -2,13 +2,23 @@
 
 /**
  * Luvio Platform — Landing Page
- * Premium hero section with gradient, feature cards, and CTAs.
+ * Premium hero layout: pill navbar, two-column hero (text + banner), service pills.
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AuthProvider } from '@/lib/auth-context';
 import { Header, MobileNav, Footer } from '@/components/layout';
+
+/* ─── Service data (All 6 features to rotate) ─── */
+const ALL_SERVICES = [
+  { icon: '💼', label: 'Jobs & Services', desc: 'Find local work or hire trusted professionals near you.' },
+  { icon: '🛍️', label: 'Community Market', desc: 'Buy, sell, or give away items with your neighbors.' },
+  { icon: '📍', label: 'Location Discovery', desc: 'Geo-fenced listings & interactive maps.' },
+  { icon: '💬', label: 'Real-time Chat', desc: 'Context-aware messaging tied to jobs and listings.' },
+  { icon: '💰', label: 'Secure Payments', desc: 'Escrow, digital wallet, multi-currency & mobile money.' },
+  { icon: '⭐', label: 'Go Premium', desc: 'Priority placements, featured badges & elevated limits.' },
+];
 
 export default function HomePage() {
   return (
@@ -16,257 +26,186 @@ export default function HomePage() {
       <div className="page-wrapper">
         <Header />
 
-        <main className="main-content">
-          {/* Hero Section */}
-          <section style={{
-            position: 'relative',
-            overflow: 'hidden',
-            padding: 'var(--space-24) var(--space-4) var(--space-16)',
-            textAlign: 'center',
-          }}>
-            {/* Background gradient */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(ellipse at 50% 0%, rgba(105, 56, 239, 0.08) 0%, transparent 70%)',
-              pointerEvents: 'none',
-            }} />
+        <main style={{ background: '#f8f9ff' }}>
 
-            {/* Floating orbs */}
-            <div style={{
-              position: 'absolute',
-              top: '10%',
-              left: '15%',
-              width: '300px',
-              height: '300px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(105, 56, 239, 0.06), transparent)',
-              filter: 'blur(60px)',
-              pointerEvents: 'none',
-            }} className="animate-float" />
-            <div style={{
-              position: 'absolute',
-              bottom: '20%',
-              right: '10%',
-              width: '250px',
-              height: '250px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(0, 198, 146, 0.06), transparent)',
-              filter: 'blur(60px)',
-              pointerEvents: 'none',
-              animationDelay: '1.5s',
-            }} className="animate-float" />
+          {/* ════════════════════════════════════════
+              HERO SECTION
+              ════════════════════════════════════════ */}
+          <section className="hero-section">
+            {/* Ambient background blobs */}
+            <div className="hero-blob hero-blob-1" />
+            <div className="hero-blob hero-blob-2" />
 
-            <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-              {/* Badge */}
-              <div className="animate-fade-in-down" style={{ marginBottom: 'var(--space-6)' }}>
-                <span className="badge badge-primary" style={{ padding: 'var(--space-2) var(--space-4)', fontSize: 'var(--font-size-sm)' }}>
-                  ✨ Now in 13 languages
+            <div className="hero-inner container">
+
+              {/* ── LEFT: Text + Services ── */}
+              <div className="hero-left animate-fade-in-up">
+
+                {/* Eyebrow badge */}
+                <span className="hero-badge">
+                  <span className="hero-badge-dot" />
+                  Now in 13 languages
                 </span>
+
+                {/* Headline */}
+                <h1 className="hero-headline">
+                  Your Neighborhood{' '}
+                  <span className="hero-headline-accent">Marketplace</span>
+                  <br />& Community Hub
+                </h1>
+
+                {/* Description */}
+                <p className="hero-desc">
+                  Find local jobs, hire trusted workers, buy &amp; sell in your community, and chat
+                  with neighbors — all in one premium platform.
+                </p>
+
+                {/* CTA row */}
+                <div className="hero-cta-row">
+                  <Link href="/auth/register" className="btn btn-primary btn-lg" id="hero-get-started-btn">
+                    Get Started — Free
+                  </Link>
+                  <Link href="/jobs" className="btn btn-secondary btn-lg" id="hero-browse-jobs-btn">
+                    Browse Jobs
+                  </Link>
+                </div>
+
+                {/* ── Service Pills (Infinite Marquee) ── */}
+                <div className="hero-services-wrapper">
+                  <div className="hero-services-ticker">
+                    {/* Render the array twice to create a seamless infinite loop */}
+                    {[...ALL_SERVICES, ...ALL_SERVICES].map((s, idx) => (
+                      <div key={idx} className="hero-service-card">
+                        <div className="hero-service-header">
+                          <span className="hero-service-icon">{s.icon}</span>
+                          <div className="hero-service-title">{s.label}</div>
+                        </div>
+                        <div className="hero-service-desc">{s.desc}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {/* Heading */}
-              <h1
-                className="animate-fade-in-up"
-                style={{
-                  fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                  fontWeight: 'var(--font-weight-extrabold)',
-                  lineHeight: 'var(--line-height-tight)',
-                  letterSpacing: '-0.03em',
-                  maxWidth: '48rem',
-                  margin: '0 auto var(--space-6)',
-                }}
-              >
-                Your Neighborhood{' '}
-                <span className="gradient-text">Marketplace</span>{' '}
-                & Community
-              </h1>
+              {/* ── RIGHT: Hero Visual Banner ── */}
+              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s' }}>
+                <div className="hero-banner-card">
+                  {/* Decorative glow behind card */}
+                  <div className="hero-banner-glow" />
 
-              {/* Subtitle */}
-              <p
-                className="animate-fade-in-up"
-                style={{
-                  fontSize: 'var(--font-size-lg)',
-                  color: 'var(--text-secondary)',
-                  maxWidth: '36rem',
-                  margin: '0 auto var(--space-8)',
-                  lineHeight: 'var(--line-height-relaxed)',
-                  animationDelay: '0.1s',
-                }}
-              >
-                Find local jobs, hire trusted workers, buy & sell in your community, and chat with neighbors — all in one platform.
-              </p>
+                  {/* Mock UI inside banner */}
+                  <div className="hero-banner-inner">
+                    {/* Top bar mockup */}
+                    <div className="mock-topbar">
+                      <span className="mock-dot" style={{ background: '#ff5f56' }} />
+                      <span className="mock-dot" style={{ background: '#ffbd2e' }} />
+                      <span className="mock-dot" style={{ background: '#27c93f' }} />
+                      <div className="mock-url-bar">luvio.it/jobs</div>
+                    </div>
 
-              {/* CTA Buttons */}
-              <div
-                className="animate-fade-in-up"
-                style={{
-                  display: 'flex',
-                  gap: 'var(--space-4)',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  animationDelay: '0.2s',
-                }}
-              >
-                <Link href="/auth/register" className="btn btn-primary btn-lg" id="hero-get-started-btn">
-                  Get Started — It&apos;s Free
-                </Link>
-                <Link href="/jobs" className="btn btn-secondary btn-lg" id="hero-browse-jobs-btn">
-                  Browse Jobs
-                </Link>
+                    {/* Map visual placeholder */}
+                    <div className="mock-map">
+                      <div className="mock-map-bg" />
+                      {/* Floating listing pins */}
+                      {[
+                        { top: '22%', left: '30%', label: 'Cleaner · €18/h', color: '#5465ff' },
+                        { top: '48%', left: '58%', label: 'Dev · €55/h', color: '#3b42e6' },
+                        { top: '68%', left: '20%', label: 'Delivery · €14/h', color: '#2c2db8' },
+                      ].map((pin) => (
+                        <div
+                          key={pin.label}
+                          className="mock-pin"
+                          style={{ top: pin.top, left: pin.left, borderColor: pin.color }}
+                        >
+                          <span className="mock-pin-dot" style={{ background: pin.color }} />
+                          <span className="mock-pin-label">{pin.label}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Bottom stats row */}
+                    <div className="mock-stats-row">
+                      {[
+                        { value: '12k+', label: 'Active Jobs' },
+                        { value: '98%', label: 'Satisfaction' },
+                        { value: '210', label: 'Countries' },
+                      ].map((stat) => (
+                        <div key={stat.label} className="mock-stat">
+                          <span className="mock-stat-value">{stat.value}</span>
+                          <span className="mock-stat-label">{stat.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Floating avatar cluster */}
+                  <div className="mock-avatars">
+                    {['#5465ff', '#3b42e6', '#2c2db8', '#768bff'].map((c, i) => (
+                      <span key={i} className="mock-avatar" style={{ background: c, marginLeft: i === 0 ? 0 : '-10px', zIndex: 4 - i }}>
+                        {['A', 'B', 'C', '+'][i]}
+                      </span>
+                    ))}
+                    <span className="mock-avatar-label">1,200+ online</span>
+                  </div>
+                </div>
               </div>
+            </div>
 
-              {/* Social proof */}
-              <div
-                className="animate-fade-in"
-                style={{
-                  marginTop: 'var(--space-12)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 'var(--space-6)',
-                  flexWrap: 'wrap',
-                  color: 'var(--text-tertiary)',
-                  fontSize: 'var(--font-size-sm)',
-                  animationDelay: '0.4s',
-                }}
-              >
-                <span>🌍 210+ Countries</span>
-                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--text-tertiary)' }} />
-                <span>💬 Real-time Chat</span>
-                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--text-tertiary)' }} />
-                <span>🔒 Secure Escrow</span>
-                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--text-tertiary)' }} />
-                <span>📱 Web + Mobile</span>
-              </div>
+            {/* Trust bar */}
+            <div className="hero-trust container animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              {['🌍 210+ Countries', '💬 Real-time Chat', '🔒 Secure Escrow', '📱 Web + Mobile'].map((item, i, arr) => (
+                <React.Fragment key={item}>
+                  <span className="hero-trust-item">{item}</span>
+                  {i < arr.length - 1 && <span className="hero-trust-dot" />}
+                </React.Fragment>
+              ))}
             </div>
           </section>
 
-          {/* Features Section */}
-          <section style={{ padding: 'var(--space-16) var(--space-4)' }}>
+          {/* ════════════════════════════════════════
+              FEATURES SECTION
+              ════════════════════════════════════════ */}
+          <section style={{ padding: 'var(--space-16) var(--space-4)', background: '#fff' }}>
             <div className="container">
               <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
-                <h2 style={{
-                  fontSize: 'var(--font-size-3xl)',
-                  fontWeight: 'var(--font-weight-bold)',
-                  marginBottom: 'var(--space-4)',
-                }}>
+                <h2 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-4)' }}>
                   Everything Your Neighborhood Needs
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', maxWidth: '32rem', margin: '0 auto' }}>
-                  One platform for jobs, marketplace, and community — designed to bring neighbors together.
+                  One platform for jobs, marketplace, and community.
                 </p>
               </div>
 
               <div className="grid grid-cols-3" style={{ gap: 'var(--space-6)' }}>
-                {/* Feature Card: Jobs */}
-                <div className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>💼</div>
-                  <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                    Jobs & Services
-                  </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                    Post jobs, receive bids from verified workers, hire, and pay securely — all with real-time chat support.
-                  </p>
-                </div>
-
-                {/* Feature Card: Marketplace */}
-                <div className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>🛍️</div>
-                  <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                    Community Market
-                  </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                    Buy, sell, or give away items in your neighborhood. 9 categories, up to 5 photos, and direct chat with sellers.
-                  </p>
-                </div>
-
-                {/* Feature Card: Maps */}
-                <div className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>📍</div>
-                  <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                    Location Discovery
-                  </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                    Interactive maps with geo-fenced feeds. Find nearby jobs and listings with distance-based filtering.
-                  </p>
-                </div>
-
-                {/* Feature Card: Chat */}
-                <div className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>💬</div>
-                  <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                    Real-time Chat
-                  </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                    Context-aware messaging tied to jobs and listings. Instant delivery with push notification fallbacks.
-                  </p>
-                </div>
-
-                {/* Feature Card: Wallet */}
-                <div className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>💰</div>
-                  <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                    Secure Payments
-                  </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                    Escrow protection, digital wallet, multi-currency support, cards, bank transfers, and mobile money.
-                  </p>
-                </div>
-
-                {/* Feature Card: Premium */}
-                <div className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>⭐</div>
-                  <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                    Go Premium
-                  </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                    Premium badges, featured listings, priority search placement, and elevated limits for power users.
-                  </p>
-                </div>
+                {ALL_SERVICES.map((f) => (
+                  <div key={f.label} className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
+                    <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-4)' }}>{f.icon}</div>
+                    <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
+                      {f.label}
+                    </h3>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
+                      {f.desc}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
 
-          {/* CTA Section */}
-          <section style={{
-            padding: 'var(--space-16) var(--space-4)',
-            textAlign: 'center',
-          }}>
+          {/* ════════════════════════════════════════
+              CTA SECTION
+              ════════════════════════════════════════ */}
+          <section style={{ padding: 'var(--space-16) var(--space-4)', textAlign: 'center', background: '#f8f9ff' }}>
             <div className="container">
-              <div
-                className="gradient-primary"
-                style={{
-                  borderRadius: 'var(--radius-2xl)',
-                  padding: 'var(--space-16) var(--space-8)',
-                  color: 'white',
-                }}
-              >
-                <h2 style={{
-                  fontSize: 'var(--font-size-3xl)',
-                  fontWeight: 'var(--font-weight-bold)',
-                  marginBottom: 'var(--space-4)',
-                }}>
+              <div className="gradient-primary" style={{ borderRadius: 'var(--radius-2xl)', padding: 'var(--space-16) var(--space-8)', color: 'white' }}>
+                <h2 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-4)' }}>
                   Ready to Join Your Community?
                 </h2>
-                <p style={{
-                  opacity: 0.9,
-                  maxWidth: '28rem',
-                  margin: '0 auto var(--space-8)',
-                  lineHeight: 'var(--line-height-relaxed)',
-                }}>
-                  Sign up for free and start connecting with your neighborhood today. Available on Web, iOS, and Android.
+                <p style={{ opacity: 0.9, maxWidth: '28rem', margin: '0 auto var(--space-8)', lineHeight: 'var(--line-height-relaxed)' }}>
+                  Sign up for free and start connecting with your neighborhood today.
                 </p>
-                <Link
-                  href="/auth/register"
-                  className="btn btn-lg"
-                  id="cta-register-btn"
-                  style={{
-                    background: 'white',
-                    color: 'var(--color-primary-600)',
-                    fontWeight: 'var(--font-weight-bold)',
-                  }}
-                >
+                <Link href="/auth/register" className="btn btn-lg" id="cta-register-btn"
+                  style={{ background: 'white', color: 'var(--color-primary-600)', fontWeight: 'var(--font-weight-bold)' }}>
                   Create Free Account
                 </Link>
               </div>

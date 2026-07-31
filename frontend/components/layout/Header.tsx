@@ -2,7 +2,7 @@
 
 /**
  * Luvio Platform — Header Component
- * Responsive header with glassmorphism, logo, nav links, and user actions.
+ * Floating pill-shaped navbar: [logo + brand] [nav links] [sign in + dashboard]
  */
 
 import React, { useState, useEffect } from 'react';
@@ -15,117 +15,103 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { href: '/jobs', label: 'Jobs', icon: '💼' },
-    { href: '/marketplace', label: 'Market', icon: '🛍️' },
-    { href: '/maps', label: 'Explore', icon: '📍' },
+    { href: '/jobs',        label: 'Jobs'    },
+    { href: '/marketplace', label: 'Market'  },
+    { href: '/maps',        label: 'Explore' },
   ];
 
   return (
-    <header className={`header glass ${scrolled ? 'header-scrolled' : ''}`}>
-      <div className="header-inner">
-        {/* Logo */}
-        <Link href="/" className="header-logo">
-          <span className="gradient-text">Luvio</span>
-        </Link>
+    <>
+      <header className={`nav-strip ${scrolled ? 'nav-strip--scrolled' : ''}`}>
+        <nav className="nav-inner" role="navigation" aria-label="Main navigation">
 
-        {/* Desktop Navigation */}
-        <nav className="header-nav" role="navigation" aria-label="Main navigation">
-          {navLinks.map(link => (
-            <Link key={link.href} href={link.href} className="header-nav-link">
-              <span style={{ marginRight: '4px' }}>{link.icon}</span>
-              {link.label}
+          {/* LEFT: logo + brand */}
+          <div className="nav-left">
+            <Link href="/" className="nav-logo-circle" aria-label="Home">
+              <img src="/logo.png" alt="Luvio Logo" className="nav-logo-img" width={24} height={24} />
             </Link>
-          ))}
-        </nav>
+            <Link href="/" className="nav-brand-card">
+              <span className="nav-brand-name">Luvio</span>
+            </Link>
+          </div>
 
-        {/* Actions */}
-        <div className="header-actions">
-          {isAuthenticated ? (
-            <>
-              <Link href="/notifications" className="btn btn-ghost btn-icon" aria-label="Notifications" id="header-notifications-btn">
-                🔔
-              </Link>
-              <Link href="/chat" className="btn btn-ghost btn-icon" aria-label="Messages" id="header-chat-btn">
-                💬
-              </Link>
-              <div style={{ position: 'relative' }}>
-                <button
-                  className="avatar avatar-md"
-                  onClick={() => setMenuOpen(!menuOpen)}
-                  aria-label="User menu"
-                  id="header-user-menu-btn"
-                >
-                  {user?.avatarUrl ? (
-                    <img src={user.avatarUrl} alt={user.displayName} />
-                  ) : (
-                    user?.displayName?.charAt(0)?.toUpperCase() || 'U'
-                  )}
-                </button>
-                {menuOpen && (
-                  <div
-                    className="card animate-scale-in"
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      top: 'calc(100% + 8px)',
-                      minWidth: '12rem',
-                      padding: 'var(--space-2)',
-                      zIndex: 'var(--z-dropdown)',
-                    }}
+          {/* CENTRE: nav links (Segmented Pill) */}
+          <div className="nav-center">
+            <div className="nav-links-pill">
+              {navLinks.map((l, index) => (
+                <React.Fragment key={l.href}>
+                  <Link href={l.href} className="nav-link-segment">
+                    {l.label}
+                  </Link>
+                  {index < navLinks.length - 1 && <div className="nav-segment-divider" />}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT: actions / dashboard card */}
+          <div className="nav-right">
+            {isAuthenticated ? (
+              <div className="nav-actions-card">
+                <Link href="/notifications" className="nav-icon-btn" aria-label="Notifications" id="header-notifications-btn">🔔</Link>
+                <Link href="/chat"          className="nav-icon-btn" aria-label="Messages"      id="header-chat-btn">💬</Link>
+                <div style={{ position: 'relative' }}>
+                  <button
+                    className="avatar avatar-md nav-avatar-btn"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    aria-label="User menu"
+                    id="header-user-menu-btn"
                   >
-                    <div style={{ padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--border-color)' }}>
-                      <div style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-sm)' }}>
-                        {user?.displayName}
-                      </div>
-                      <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-tertiary)' }}>
-                        {user?.email || user?.phone}
-                      </div>
-                    </div>
-                    <Link href="/profile" className="header-nav-link" style={{ display: 'block', padding: 'var(--space-2) var(--space-4)' }} onClick={() => setMenuOpen(false)}>
-                      👤 Profile
-                    </Link>
-                    <Link href="/wallet" className="header-nav-link" style={{ display: 'block', padding: 'var(--space-2) var(--space-4)' }} onClick={() => setMenuOpen(false)}>
-                      💰 Wallet
-                    </Link>
-                    <Link href="/profile/settings" className="header-nav-link" style={{ display: 'block', padding: 'var(--space-2) var(--space-4)' }} onClick={() => setMenuOpen(false)}>
-                      ⚙️ Settings
-                    </Link>
-                    <button
-                      className="header-nav-link"
-                      style={{ display: 'block', width: '100%', textAlign: 'left', padding: 'var(--space-2) var(--space-4)', color: 'var(--color-error)' }}
-                      onClick={() => { logout(); setMenuOpen(false); }}
-                      id="header-logout-btn"
-                    >
-                      🚪 Sign Out
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <Link href="/auth/login" className="btn btn-ghost" id="header-login-btn">
-                Sign In
-              </Link>
-              <Link href="/auth/register" className="btn btn-primary" id="header-register-btn">
-                Get Started
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
+                    {user?.avatarUrl
+                      ? <img src={user.avatarUrl} alt={user.displayName} width={36} height={36} />
+                      : user?.displayName?.charAt(0)?.toUpperCase() || 'U'}
+                  </button>
 
-      <style jsx>{`
-        .header-scrolled {
-          box-shadow: var(--shadow-md);
-        }
-      `}</style>
-    </header>
+                  {menuOpen && (
+                    <div className="card animate-scale-in" style={{
+                      position: 'absolute', right: 0, top: 'calc(100% + 8px)',
+                      minWidth: '12rem', padding: 'var(--space-2)', zIndex: 'var(--z-dropdown)',
+                    }}>
+                      <div style={{ padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--border-color)' }}>
+                        <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{user?.displayName}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>{user?.email || user?.phone}</div>
+                      </div>
+                      {[
+                        { href: '/profile',          label: '👤 Profile'  },
+                        { href: '/wallet',           label: '💰 Wallet'   },
+                        { href: '/profile/settings', label: '⚙️ Settings' },
+                      ].map(item => (
+                        <Link key={item.href} href={item.href} className="header-nav-link"
+                          style={{ display: 'block', padding: 'var(--space-2) var(--space-4)' }}
+                          onClick={() => setMenuOpen(false)}>
+                          {item.label}
+                        </Link>
+                      ))}
+                      <button className="header-nav-link"
+                        style={{ display: 'block', width: '100%', textAlign: 'left', padding: 'var(--space-2) var(--space-4)', color: 'var(--color-error)' }}
+                        onClick={() => { logout(); setMenuOpen(false); }}
+                        id="header-logout-btn">
+                        🚪 Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="nav-auth-card">
+                <Link href="/auth/login" className="nav-signin-text" id="header-login-btn">Sign In</Link>
+                <Link href="/auth/register" className="nav-dashboard-card" id="header-dashboard-btn">Dashboard</Link>
+              </div>
+            )}
+          </div>
+        </nav>
+      </header>
+    </>
   );
 }
