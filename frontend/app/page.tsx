@@ -88,65 +88,21 @@ export default function HomePage() {
               </div>
 
               {/* ── RIGHT: Hero Visual Banner ── */}
-              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s' }}>
-                <div className="hero-banner-card">
-                  {/* Decorative glow behind card */}
-                  <div className="hero-banner-glow" />
-
-                  {/* Mock UI inside banner */}
-                  <div className="hero-banner-inner">
-                    {/* Top bar mockup */}
-                    <div className="mock-topbar">
-                      <span className="mock-dot" style={{ background: '#ff5f56' }} />
-                      <span className="mock-dot" style={{ background: '#ffbd2e' }} />
-                      <span className="mock-dot" style={{ background: '#27c93f' }} />
-                      <div className="mock-url-bar">luvio.it/jobs</div>
-                    </div>
-
-                    {/* Map visual placeholder */}
-                    <div className="mock-map">
-                      <div className="mock-map-bg" />
-                      {/* Floating listing pins */}
-                      {[
-                        { top: '22%', left: '30%', label: 'Cleaner · €18/h', color: '#5465ff' },
-                        { top: '48%', left: '58%', label: 'Dev · €55/h', color: '#3b42e6' },
-                        { top: '68%', left: '20%', label: 'Delivery · €14/h', color: '#2c2db8' },
-                      ].map((pin) => (
-                        <div
-                          key={pin.label}
-                          className="mock-pin"
-                          style={{ top: pin.top, left: pin.left, borderColor: pin.color }}
-                        >
-                          <span className="mock-pin-dot" style={{ background: pin.color }} />
-                          <span className="mock-pin-label">{pin.label}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Bottom stats row */}
-                    <div className="mock-stats-row">
-                      {[
-                        { value: '12k+', label: 'Active Jobs' },
-                        { value: '98%', label: 'Satisfaction' },
-                        { value: '210', label: 'Countries' },
-                      ].map((stat) => (
-                        <div key={stat.label} className="mock-stat">
-                          <span className="mock-stat-value">{stat.value}</span>
-                          <span className="mock-stat-label">{stat.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Floating avatar cluster */}
-                  <div className="mock-avatars">
-                    {['#5465ff', '#3b42e6', '#2c2db8', '#768bff'].map((c, i) => (
-                      <span key={i} className="mock-avatar" style={{ background: c, marginLeft: i === 0 ? 0 : '-10px', zIndex: 4 - i }}>
-                        {['A', 'B', 'C', '+'][i]}
-                      </span>
-                    ))}
-                    <span className="mock-avatar-label">1,200+ online</span>
-                  </div>
+              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ 
+                  position: 'relative', 
+                  width: '100%', 
+                  maxWidth: '560px',
+                  borderRadius: '24px', 
+                  overflow: 'hidden', 
+                  boxShadow: '0 24px 48px rgba(84, 101, 255, 0.15)',
+                  border: '1px solid rgba(84, 101, 255, 0.1)'
+                }}>
+                  <img 
+                    src="/hero_banner.png" 
+                    alt="Luvio Neighborhood App Interface" 
+                    style={{ width: '100%', height: 'auto', display: 'block' }} 
+                  />
                 </div>
               </div>
             </div>
@@ -163,28 +119,46 @@ export default function HomePage() {
           </section>
 
           {/* ════════════════════════════════════════
-              FEATURES SECTION
+              HOW IT WORKS SECTION
               ════════════════════════════════════════ */}
           <section style={{ padding: 'var(--space-16) var(--space-4)', background: '#fff' }}>
             <div className="container">
               <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
                 <h2 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-4)' }}>
-                  Everything Your Neighborhood Needs
+                  How Luvio Works
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', maxWidth: '32rem', margin: '0 auto' }}>
-                  One platform for jobs, marketplace, and community.
+                  Connect with your neighborhood in three simple steps.
                 </p>
               </div>
 
-              <div className="grid grid-cols-3" style={{ gap: 'var(--space-6)' }}>
-                {ALL_SERVICES.map((f) => (
-                  <div key={f.label} className="card card-interactive" style={{ textAlign: 'center', padding: 'var(--space-8)' }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-4)' }}>{f.icon}</div>
-                    <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-3)' }}>
-                      {f.label}
+              <div className="grid grid-cols-3" style={{ gap: 'var(--space-2)', position: 'relative' }}>
+                {/* Connecting Line Background (Desktop only) */}
+                <div className="hiw-line-bg hidden md:block" />
+                {/* Connecting Line Animated Fill (Desktop only) */}
+                <div className="hiw-line-fill hidden md:block" />
+
+                {[
+                  { step: '1', title: 'Post a Job or Listing', desc: 'Describe what you need done, or snap a photo of what you want to sell locally.', icon: '📝' },
+                  { step: '2', title: 'Connect & Chat', desc: 'Review bids from verified neighbors, chat securely in real-time, and agree on details.', icon: '🤝' },
+                  { step: '3', title: 'Complete Securely', desc: 'Pay via secure Escrow, get the job done, and build trust with a community rating.', icon: '✅' },
+                ].map((s) => (
+                  <div key={s.step} className="hiw-card">
+                    <div className="hiw-icon-wrap">
+                      <span style={{ fontSize: '1.8rem' }}>{s.icon}</span>
+                    </div>
+                    <div style={{ 
+                      display: 'inline-block', padding: '2px 12px', background: 'var(--color-primary-50)', 
+                      color: 'var(--color-primary-600)', borderRadius: '99px', fontSize: '0.75rem', 
+                      fontWeight: 700, marginBottom: 'var(--space-3)' 
+                    }}>
+                      Step {s.step}
+                    </div>
+                    <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: '1.25rem', marginBottom: 'var(--space-3)' }}>
+                      {s.title}
                     </h3>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', lineHeight: 'var(--line-height-relaxed)' }}>
-                      {f.desc}
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                      {s.desc}
                     </p>
                   </div>
                 ))}
@@ -195,19 +169,46 @@ export default function HomePage() {
           {/* ════════════════════════════════════════
               CTA SECTION
               ════════════════════════════════════════ */}
-          <section style={{ padding: 'var(--space-16) var(--space-4)', textAlign: 'center', background: '#f8f9ff' }}>
-            <div className="container">
-              <div className="gradient-primary" style={{ borderRadius: 'var(--radius-2xl)', padding: 'var(--space-16) var(--space-8)', color: 'white' }}>
-                <h2 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-4)' }}>
-                  Ready to Join Your Community?
+          <section style={{ padding: 'var(--space-20) var(--space-4)', textAlign: 'center', background: '#f8f9ff', position: 'relative', overflow: 'hidden' }}>
+            {/* Decorative background orbs for the glass effect to interact with */}
+            <div style={{ position: 'absolute', top: '10%', left: '15%', width: '400px', height: '400px', background: 'rgba(84, 101, 255, 0.4)', borderRadius: '50%', filter: 'blur(120px)', opacity: 0.6, zIndex: 0 }} />
+            <div style={{ position: 'absolute', bottom: '0%', right: '10%', width: '500px', height: '500px', background: 'rgba(167, 139, 250, 0.3)', borderRadius: '50%', filter: 'blur(140px)', opacity: 0.6, zIndex: 0 }} />
+            <div style={{ position: 'absolute', top: '40%', left: '40%', width: '300px', height: '300px', background: 'rgba(96, 165, 250, 0.3)', borderRadius: '50%', filter: 'blur(100px)', opacity: 0.5, zIndex: 0 }} />
+
+            <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{ 
+                borderRadius: '32px', 
+                padding: 'var(--space-16) var(--space-8)', 
+                background: 'rgba(255, 255, 255, 0.45)',
+                backdropFilter: 'blur(32px)',
+                WebkitBackdropFilter: 'blur(32px)',
+                border: '1px solid rgba(255, 255, 255, 0.8)',
+                boxShadow: '0 24px 64px rgba(84, 101, 255, 0.1)',
+                color: 'var(--text-primary)',
+                maxWidth: '900px',
+                margin: '0 auto',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                {/* Inner shine */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%)' }} />
+                
+                <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: 'var(--space-4)', letterSpacing: '-0.02em' }}>
+                  Ready to Join Your <span style={{ color: 'var(--color-primary-600)' }}>Community?</span>
                 </h2>
-                <p style={{ opacity: 0.9, maxWidth: '28rem', margin: '0 auto var(--space-8)', lineHeight: 'var(--line-height-relaxed)' }}>
-                  Sign up for free and start connecting with your neighborhood today.
+                <p style={{ color: 'var(--text-secondary)', maxWidth: '30rem', margin: '0 auto var(--space-10)', lineHeight: '1.6', fontSize: '1.125rem' }}>
+                  Sign up for free and start connecting, earning, and sharing with your neighborhood today.
                 </p>
-                <Link href="/auth/register" className="btn btn-lg" id="cta-register-btn"
-                  style={{ background: 'white', color: 'var(--color-primary-600)', fontWeight: 'var(--font-weight-bold)' }}>
-                  Create Free Account
-                </Link>
+                <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <Link href="/auth/register" className="btn btn-primary btn-lg" id="cta-register-btn"
+                    style={{ padding: '0 32px', height: '56px', fontSize: '1.1rem', boxShadow: '0 12px 32px rgba(84,101,255,0.3)', borderRadius: '999px' }}>
+                    Create Free Account
+                  </Link>
+                  <Link href="/jobs" className="btn btn-lg" id="cta-learn-btn"
+                    style={{ padding: '0 32px', height: '56px', fontSize: '1.1rem', background: 'rgba(255,255,255,0.7)', color: 'var(--text-primary)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '999px', backdropFilter: 'blur(8px)' }}>
+                    Browse Jobs
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
