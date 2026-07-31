@@ -31,6 +31,11 @@ function getAuthService(c: any): AuthService {
     c.env.REFRESH_TOKEN_SECRET,
     c.env.JWT_EXPIRES_IN || '7d',
     c.env.REFRESH_TOKEN_EXPIRES_IN || '30d',
+    {
+      userId: c.env.SENDPULSE_API_USER_ID,
+      secret: c.env.SENDPULSE_API_SECRET,
+      fromEmail: c.env.SENDPULSE_FROM_EMAIL || 'noreply@luvio.it',
+    }
   );
 }
 
@@ -80,16 +85,16 @@ auth.post('/login',
 
 /**
  * POST /api/v1/auth/otp/request
- * Send OTP code to phone number.
+ * Send OTP code to email.
  */
 auth.post('/otp/request',
   otpRateLimitMiddleware(),
   validateBody(requestOtpSchema),
   async (c) => {
     try {
-      const { phone } = await c.req.json();
+      const { email } = await c.req.json();
       const service = getAuthService(c);
-      const result = await service.requestOTP(phone);
+      const result = await service.requestOTP(email);
       return c.json({ success: true, data: result });
     } catch (err: any) {
       return c.json({ success: false, error: err.message }, 400);
@@ -108,7 +113,7 @@ auth.post('/otp/verify',
     try {
       const body = await c.req.json();
       const service = getAuthService(c);
-      const result = await service.verifyOTP(body.phone, body.code);
+      const result = await service.verifyOTP(body.email, body.code);
       return c.json({ success: true, data: result });
     } catch (err: any) {
       return c.json({ success: false, error: err.message }, 400);

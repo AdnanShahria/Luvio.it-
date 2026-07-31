@@ -6,11 +6,8 @@ export const emailSchema = z.string().email('Invalid email address').max(255);
 
 export const passwordSchema = z
   .string()
-  .min(8, 'Password must be at least 8 characters')
-  .max(128, 'Password must be at most 128 characters')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number');
+  .min(6, 'Password must be at least 6 characters')
+  .max(128, 'Password must be at most 128 characters');
 
 export const phoneSchema = z.string().regex(/^\+[1-9]\d{6,14}$/, 'Invalid phone number format (include country code)');
 
@@ -33,12 +30,12 @@ export const loginSchema = z.object({
 });
 
 export const verifyOtpSchema = z.object({
-  phone: phoneSchema,
+  email: emailSchema,
   code: z.string().length(6, 'OTP must be 6 digits').regex(/^\d+$/, 'OTP must be numeric'),
 });
 
 export const requestOtpSchema = z.object({
-  phone: phoneSchema,
+  email: emailSchema,
 });
 
 export const resetPasswordSchema = z.object({

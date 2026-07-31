@@ -39,7 +39,7 @@ export const users = sqliteTable('users', {
 export const otpCodes = sqliteTable('otp_codes', {
   id: id(),
   userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
-  phone: text('phone').notNull(),
+  email: text('email').notNull(),
   code: text('code').notNull(),
   expiresAt: text('expires_at').notNull(),
   verified: integer('verified', { mode: 'boolean' }).notNull().default(false),

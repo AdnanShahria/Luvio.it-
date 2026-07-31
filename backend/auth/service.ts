@@ -88,6 +88,7 @@ export class AuthService {
     private refreshSecret: string,
     private jwtExpiresIn: string = '7d',
     private refreshExpiresIn: string = '30d',
+    private sendPulseConfig?: { userId: string; secret: string; fromEmail: string }
   ) {}
 
   /**
@@ -176,27 +177,33 @@ export class AuthService {
   }
 
   /**
-   * Request an OTP code for phone verification.
+   * Request an OTP code for email verification.
    */
-  async requestOTP(phone: string) {
+  async requestOTP(email: string) {
     const code = generateOTP(6);
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 minutes
 
-    // Find user by phone (may not exist yet during registration)
+    // Find user by email (may not exist yet during registration)
     const user = await this.db.query.users.findFirst({
-      where: eq(schema.users.phone, phone),
+      where: eq(schema.users.email, email),
     });
 
     await this.db.insert(schema.otpCodes).values({
       userId: user?.id || null,
-      phone,
+      email,
       code,
       expiresAt,
     });
 
-    // TODO: Send OTP via SMS service (Twilio, MessageBird, etc.)
-    // For development, log the code
-    console.log(`[DEV OTP] Phone: ${phone}, Code: ${code}`);
+    if (this.sendPulseConfig?.userId && this.sendPulseConfig?.secret) {
+      await this.sendPulseEmail(
+        email, 
+        'Your Luvio Verification Code',
+        `<p>Your verification code is: <strong>${code}</strong></p><p>This code will expire in 10 minutes.</p>`
+      );
+    } else {
+      console.log(`[DEV OTP] Email: ${email}, Code: ${code}`);
+    }
 
     return { message: 'OTP sent successfully', expiresIn: 600 };
   }
@@ -204,10 +211,10 @@ export class AuthService {
   /**
    * Verify an OTP code.
    */
-  async verifyOTP(phone: string, code: string) {
+  async verifyOTP(email: string, code: string) {
     const otpRecord = await this.db.query.otpCodes.findFirst({
       where: and(
-        eq(schema.otpCodes.phone, phone),
+        eq(schema.otpCodes.email, email),
         eq(schema.otpCodes.code, code),
         eq(schema.otpCodes.verified, false),
       ),
@@ -230,7 +237,7 @@ export class AuthService {
       .set({ verified: true })
       .where(eq(schema.otpCodes.id, otpRecord.id));
 
-    // If user exists, mark phone as verified
+    // If user exists, mark email as verified
     if (otpRecord.userId) {
       await this.db.update(schema.users)
         .set({ isVerified: true })
@@ -261,8 +268,17 @@ export class AuthService {
       expiresAt,
     });
 
-    // TODO: Send email with reset link
-    console.log(`[DEV RESET] User: ${email}, Token: ${resetToken}`);
+    const resetUrl = `https://luvio.it/auth/set-password?token=${resetToken}`;
+    
+    if (this.sendPulseConfig?.userId && this.sendPulseConfig?.secret) {
+      await this.sendPulseEmail(
+        email,
+        'Reset Your Luvio Password',
+        `<p>Click the link below to reset your password:</p><p><a href="${resetUrl}">${resetUrl}</a></p><p>This link will expire in 1 hour.</p>`
+      );
+    } else {
+      console.log(`[DEV RESET] User: ${email}, Token: ${resetToken}`);
+    }
 
     return { message: 'If the email exists, a reset link has been sent' };
   }
@@ -384,5 +400,59 @@ export class AuthService {
   private sanitizeUser(user: typeof schema.users.$inferSelect) {
     const { passwordHash, ...safe } = user;
     return safe;
+  }
+
+  private async sendPulseEmail(toEmail: string, subject: string, htmlBody: string) {
+    if (!this.sendPulseConfig) return;
+    
+    try {
+      // 1. Get access token
+      const tokenRes = await fetch('https://api.sendpulse.com/oauth/access_token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          grant_type: 'client_credentials',
+          client_id: this.sendPulseConfig.userId,
+          client_secret: this.sendPulseConfig.secret
+        })
+      });
+      
+      if (!tokenRes.ok) throw new Error('Failed to get SendPulse token');
+      const tokenData = await tokenRes.json() as any;
+      const accessToken = tokenData.access_token;
+      
+      // 2. Send email
+      const emailRes = await fetch('https://api.sendpulse.com/smtp/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+          email: {
+            html: htmlBody,
+            text: htmlBody.replace(/<[^>]*>?/gm, ''), // naive html-to-text
+            subject: subject,
+            from: {
+              name: 'Luvio Team',
+              email: this.sendPulseConfig.fromEmail
+            },
+            to: [
+              {
+                email: toEmail
+              }
+            ]
+          }
+        })
+      });
+      
+      if (!emailRes.ok) {
+        const errText = await emailRes.text();
+        console.error('SendPulse error:', errText);
+        throw new Error('Failed to send email via SendPulse');
+      }
+    } catch (err) {
+      console.error('Email sending failed:', err);
+    }
   }
 }

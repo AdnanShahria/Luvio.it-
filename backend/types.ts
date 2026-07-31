@@ -14,6 +14,9 @@ export interface Env {
     REFRESH_TOKEN_EXPIRES_IN: string;
     OTP_SERVICE_API_KEY: string;
     OTP_SERVICE_URL: string;
+    SENDPULSE_API_USER_ID: string;
+    SENDPULSE_API_SECRET: string;
+    SENDPULSE_FROM_EMAIL: string;
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
     APPLE_CLIENT_ID: string;

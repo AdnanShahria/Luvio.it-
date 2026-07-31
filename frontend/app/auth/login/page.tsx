@@ -12,10 +12,8 @@ import { AuthProvider, useAuth } from '@/lib/auth-context';
 
 function LoginForm() {
   const router = useRouter();
-  const { login, loginWithPhone } = useAuth();
-  const [mode, setMode] = useState<'email' | 'phone'>('email');
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,9 +25,7 @@ function LoginForm() {
     setIsLoading(true);
 
     try {
-      const result = mode === 'email'
-        ? await login(email, password)
-        : await loginWithPhone(phone, password);
+      const result = await login(email, password);
 
       if (result.success) {
         router.push('/');
@@ -56,74 +52,30 @@ function LoginForm() {
 
         {/* Social Login */}
         <div className="auth-social-buttons" style={{ marginBottom: 'var(--space-6)' }}>
-          <button className="btn btn-secondary" style={{ flex: 1 }} id="login-google-btn" type="button">
+          <button className="btn btn-secondary" style={{ flex: 1 }} id="login-google-btn" type="button" onClick={() => alert('Social authentication is coming soon!')}>
             <span>🔵</span> Google
           </button>
-          <button className="btn btn-secondary" style={{ flex: 1 }} id="login-apple-btn" type="button">
+          <button className="btn btn-secondary" style={{ flex: 1 }} id="login-apple-btn" type="button" onClick={() => alert('Social authentication is coming soon!')}>
             <span>🍎</span> Apple
           </button>
         </div>
 
-        <div className="auth-divider">or continue with</div>
-
-        {/* Toggle: Email / Phone */}
-        <div style={{
-          display: 'flex',
-          gap: 'var(--space-1)',
-          background: 'var(--bg-tertiary)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '3px',
-          marginTop: 'var(--space-6)',
-          marginBottom: 'var(--space-5)',
-        }}>
-          <button
-            type="button"
-            onClick={() => setMode('email')}
-            className={mode === 'email' ? 'btn btn-primary' : 'btn btn-ghost'}
-            style={{ flex: 1, padding: 'var(--space-2)' }}
-          >
-            Email
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('phone')}
-            className={mode === 'phone' ? 'btn btn-primary' : 'btn btn-ghost'}
-            style={{ flex: 1, padding: 'var(--space-2)' }}
-          >
-            Phone
-          </button>
-        </div>
+        <div className="auth-divider">or continue with email</div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          {mode === 'email' ? (
-            <div className="input-group">
-              <label htmlFor="login-email" className="input-label">Email Address</label>
-              <input
-                id="login-email"
-                type="email"
-                className="input"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-              />
-            </div>
-          ) : (
-            <div className="input-group">
-              <label htmlFor="login-phone" className="input-label">Phone Number</label>
-              <input
-                id="login-phone"
-                type="tel"
-                className="input"
-                placeholder="+1 (555) 123-4567"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                autoComplete="tel"
-              />
-            </div>
-          )}
+          <div className="input-group">
+            <label htmlFor="login-email" className="input-label">Email Address</label>
+            <input
+              id="login-email"
+              type="email"
+              className="input"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
 
           <div className="input-group">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

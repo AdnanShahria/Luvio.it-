@@ -94,3 +94,4 @@ app.onError(errorHandler);
 
 export default app;
 export type AppType = typeof app;
+export { ChatRoom } from './chat/room';

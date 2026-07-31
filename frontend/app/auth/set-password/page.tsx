@@ -1,25 +1,23 @@
 'use client';
 
 /**
- * Luvio Platform — Register Page
- * Multi-field registration with email/phone, display name, and password.
+ * Luvio Platform — Set New Password Page
+ * Allows users to set a new password using a reset token.
  */
 
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { AuthProvider, useAuth } from '@/lib/auth-context';
+import { api } from '@/lib/api-client';
 
-function RegisterForm() {
+export default function SetPasswordPage() {
   const router = useRouter();
-  const { register } = useAuth();
-  const [displayName, setDisplayName] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   // Simplified password validation (just length is checked by HTML input attribute)
 
@@ -34,19 +32,20 @@ function RegisterForm() {
 
 
 
+    const token = new URLSearchParams(window.location.search).get('token');
+    if (!token) {
+      setError('Invalid or missing reset token.');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const result = await register({
-        email,
-        password,
-        displayName,
-      });
-
-      if (result.success) {
-        router.push('/');
+      const response = await api.post('/auth/password/set', { token, password }, { skipAuth: true });
+      if (response.success) {
+        setSuccess(true);
       } else {
-        setError(result.error || 'Registration failed');
+        setError(response.error || 'Failed to update password');
       }
     } catch {
       setError('An unexpected error occurred');
@@ -55,6 +54,26 @@ function RegisterForm() {
     }
   };
 
+  if (success) {
+    return (
+      <div className="auth-page">
+        <div className="auth-card" style={{ textAlign: 'center' }}>
+          <div className="auth-header">
+            <Link href="/" className="header-logo" style={{ display: 'inline-block', marginBottom: 'var(--space-4)' }}>
+              <span className="gradient-text" style={{ fontSize: 'var(--font-size-3xl)' }}>Luvio</span>
+            </Link>
+            <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>✅</div>
+            <h1 className="auth-title">Password Updated</h1>
+            <p className="auth-subtitle">Your password has been successfully changed.</p>
+          </div>
+          <Link href="/auth/login" className="btn btn-primary" style={{ width: '100%', display: 'inline-block' }}>
+            Sign In with New Password
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -62,58 +81,16 @@ function RegisterForm() {
           <Link href="/" className="header-logo" style={{ display: 'inline-block', marginBottom: 'var(--space-4)' }}>
             <span className="gradient-text" style={{ fontSize: 'var(--font-size-3xl)' }}>Luvio</span>
           </Link>
-          <h1 className="auth-title">Create Account</h1>
-          <p className="auth-subtitle">Join your neighborhood community today</p>
+          <h1 className="auth-title">Set New Password</h1>
+          <p className="auth-subtitle">Choose a strong password for your account</p>
         </div>
-
-        {/* Social Register */}
-        <div className="auth-social-buttons" style={{ marginBottom: 'var(--space-6)' }}>
-          <button className="btn btn-secondary" style={{ flex: 1 }} id="register-google-btn" type="button" onClick={() => alert('Social authentication is coming soon!')}>
-            <span>🔵</span> Google
-          </button>
-          <button className="btn btn-secondary" style={{ flex: 1 }} id="register-apple-btn" type="button" onClick={() => alert('Social authentication is coming soon!')}>
-            <span>🍎</span> Apple
-          </button>
-        </div>
-
-        <div className="auth-divider">or register with email</div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="register-name" className="input-label">Display Name</label>
-            <input
-              id="register-name"
-              type="text"
-              className="input"
-              placeholder="Your name"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              required
-              minLength={2}
-              maxLength={50}
-              autoComplete="name"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="register-email" className="input-label">Email Address</label>
-            <input
-              id="register-email"
-              type="email"
-              className="input"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="register-password" className="input-label">Password</label>
+            <label htmlFor="set-password" className="input-label">New Password</label>
             <div style={{ position: 'relative' }}>
               <input
-                id="register-password"
+                id="set-password"
                 type={showPassword ? 'text' : 'password'}
                 className="input"
                 placeholder="Min. 6 characters"
@@ -142,9 +119,9 @@ function RegisterForm() {
           </div>
 
           <div className="input-group">
-            <label htmlFor="register-confirm-password" className="input-label">Confirm Password</label>
+            <label htmlFor="confirm-password" className="input-label">Confirm Password</label>
             <input
-              id="register-confirm-password"
+              id="confirm-password"
               type="password"
               className={`input ${confirmPassword && password !== confirmPassword ? 'input-error' : ''}`}
               placeholder="Repeat your password"
@@ -173,37 +150,22 @@ function RegisterForm() {
             type="submit"
             className="btn btn-primary btn-lg"
             disabled={isLoading}
-            id="register-submit-btn"
             style={{ width: '100%' }}
           >
             {isLoading ? (
-              <><span className="spinner" style={{ width: '1rem', height: '1rem', borderTopColor: 'white' }} /> Creating account...</>
+              <><span className="spinner" style={{ width: '1rem', height: '1rem', borderTopColor: 'white' }} /> Updating...</>
             ) : (
-              'Create Account'
+              'Set Password'
             )}
           </button>
-
-          <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-tertiary)', textAlign: 'center' }}>
-            By creating an account, you agree to our{' '}
-            <Link href="/terms" style={{ fontWeight: 'var(--font-weight-medium)' }}>Terms</Link>{' '}
-            and{' '}
-            <Link href="/privacy" style={{ fontWeight: 'var(--font-weight-medium)' }}>Privacy Policy</Link>.
-          </p>
         </form>
 
         <div className="auth-footer">
-          Already have an account?{' '}
-          <Link href="/auth/login">Sign in</Link>
+          <Link href="/auth/login" style={{ fontWeight: 'var(--font-weight-medium)' }}>
+            ← Back to Sign In
+          </Link>
         </div>
       </div>
     </div>
-  );
-}
-
-export default function RegisterPage() {
-  return (
-    <AuthProvider>
-      <RegisterForm />
-    </AuthProvider>
   );
 }

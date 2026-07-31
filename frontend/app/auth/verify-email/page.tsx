@@ -71,9 +71,9 @@ export default function VerifyOtpPage() {
     setError('');
 
     try {
-      // Phone would come from query params or context
-      const phone = new URLSearchParams(window.location.search).get('phone') || '';
-      const response = await api.post('/auth/otp/verify', { phone, code }, { skipAuth: true });
+      // Email would come from query params or context
+      const email = new URLSearchParams(window.location.search).get('email') || '';
+      const response = await api.post('/auth/otp/verify', { email, code }, { skipAuth: true });
 
       if (response.success) {
         router.push('/');
@@ -90,8 +90,8 @@ export default function VerifyOtpPage() {
   };
 
   const handleResend = async () => {
-    const phone = new URLSearchParams(window.location.search).get('phone') || '';
-    await api.post('/auth/otp/request', { phone }, { skipAuth: true });
+    const email = new URLSearchParams(window.location.search).get('email') || '';
+    await api.post('/auth/otp/request', { email }, { skipAuth: true });
     setResendTimer(60);
   };
 
@@ -102,10 +102,10 @@ export default function VerifyOtpPage() {
           <Link href="/" className="header-logo" style={{ display: 'inline-block', marginBottom: 'var(--space-4)' }}>
             <span className="gradient-text" style={{ fontSize: 'var(--font-size-3xl)' }}>Luvio</span>
           </Link>
-          <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>📱</div>
-          <h1 className="auth-title">Verify Your Phone</h1>
+          <div style={{ fontSize: '3rem', marginBottom: 'var(--space-4)' }}>📧</div>
+          <h1 className="auth-title">Verify Your Email</h1>
           <p className="auth-subtitle">
-            Enter the 6-digit code sent to your phone number
+            Enter the 6-digit code sent to your email address
           </p>
         </div>
 
