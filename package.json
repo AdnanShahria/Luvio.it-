@@ -13,7 +13,7 @@
     "dev:full": "node scripts/dev-banner.mjs && concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"yellow,cyan\" \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:frontend": "npm run dev --workspace=frontend",
     "dev:backend": "npm run dev --workspace=backend",
-    "build": "npm run build --workspace=shared && npm run build --workspace=backend && npm run build --workspace=frontend",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
     "build:frontend": "npm run build --workspace=frontend",
     "type-check": "tsc --noEmit --project frontend/tsconfig.json && tsc --noEmit --project backend/tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx",
