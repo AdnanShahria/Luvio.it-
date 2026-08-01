@@ -155,7 +155,7 @@
   /* --- Layout --- */
   --header-height: 4.5rem;
   --sidebar-width: 16rem;
-  --max-width: 80rem;
+  --max-width: 90rem;
   --mobile-nav-height: 4.5rem;
 }
 
@@ -1042,7 +1042,7 @@ ul, ol {
 /* ── inner container ── */
 .nav-inner {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--max-width);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -1063,18 +1063,12 @@ ul, ol {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #5465ff, #2c2db8);
-  box-shadow: 0 4px 10px rgba(84, 101, 255, 0.2);
   flex-shrink: 0;
-  overflow: hidden;
 }
 
 .nav-logo-img {
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
 }
 
@@ -1331,8 +1325,6 @@ ul, ol {
   max-width: 100%;
   position: relative;
   margin-top: 12px;
-  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
 .hero-services-ticker {

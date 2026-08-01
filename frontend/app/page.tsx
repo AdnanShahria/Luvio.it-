@@ -9,15 +9,16 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AuthProvider } from '@/lib/auth-context';
 import { Header, MobileNav, Footer } from '@/components/layout';
+import { Briefcase, ShoppingBag, MapPin, MessageCircle, CircleDollarSign, Star, PenLine, Handshake, CheckCircle, Globe, Lock, Smartphone } from 'lucide-react';
 
 /* ─── Service data (All 6 features to rotate) ─── */
 const ALL_SERVICES = [
-  { icon: '💼', label: 'Jobs & Services', desc: 'Find local work or hire trusted professionals near you.' },
-  { icon: '🛍️', label: 'Community Market', desc: 'Buy, sell, or give away items with your neighbors.' },
-  { icon: '📍', label: 'Location Discovery', desc: 'Geo-fenced listings & interactive maps.' },
-  { icon: '💬', label: 'Real-time Chat', desc: 'Context-aware messaging tied to jobs and listings.' },
-  { icon: '💰', label: 'Secure Payments', desc: 'Escrow, digital wallet, multi-currency & mobile money.' },
-  { icon: '⭐', label: 'Go Premium', desc: 'Priority placements, featured badges & elevated limits.' },
+  { icon: <Briefcase size={24} />, label: 'Jobs & Services', desc: 'Find local work or hire trusted professionals near you.' },
+  { icon: <ShoppingBag size={24} />, label: 'Community Market', desc: 'Buy, sell, or give away items with your neighbors.' },
+  { icon: <MapPin size={24} />, label: 'Location Discovery', desc: 'Geo-fenced listings & interactive maps.' },
+  { icon: <MessageCircle size={24} />, label: 'Real-time Chat', desc: 'Context-aware messaging tied to jobs and listings.' },
+  { icon: <CircleDollarSign size={24} />, label: 'Secure Payments', desc: 'Escrow, digital wallet, multi-currency & mobile money.' },
+  { icon: <Star size={24} />, label: 'Go Premium', desc: 'Priority placements, featured badges & elevated limits.' },
 ];
 
 export default function HomePage() {
@@ -88,7 +89,7 @@ export default function HomePage() {
               </div>
 
               {/* ── RIGHT: Hero Visual Banner ── */}
-              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <div style={{ 
                   position: 'relative', 
                   width: '100%', 
@@ -109,9 +110,17 @@ export default function HomePage() {
 
             {/* Trust bar */}
             <div className="hero-trust container animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              {['🌍 210+ Countries', '💬 Real-time Chat', '🔒 Secure Escrow', '📱 Web + Mobile'].map((item, i, arr) => (
-                <React.Fragment key={item}>
-                  <span className="hero-trust-item">{item}</span>
+              {[
+                { text: '210+ Countries', icon: <Globe size={18} /> },
+                { text: 'Real-time Chat', icon: <MessageCircle size={18} /> },
+                { text: 'Secure Escrow', icon: <Lock size={18} /> },
+                { text: 'Web + Mobile', icon: <Smartphone size={18} /> }
+              ].map((item, i, arr) => (
+                <React.Fragment key={item.text}>
+                  <span className="hero-trust-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                    {item.icon}
+                    {item.text}
+                  </span>
                   {i < arr.length - 1 && <span className="hero-trust-dot" />}
                 </React.Fragment>
               ))}
@@ -139,13 +148,13 @@ export default function HomePage() {
                 <div className="hiw-line-fill hidden md:block" />
 
                 {[
-                  { step: '1', title: 'Post a Job or Listing', desc: 'Describe what you need done, or snap a photo of what you want to sell locally.', icon: '📝' },
-                  { step: '2', title: 'Connect & Chat', desc: 'Review bids from verified neighbors, chat securely in real-time, and agree on details.', icon: '🤝' },
-                  { step: '3', title: 'Complete Securely', desc: 'Pay via secure Escrow, get the job done, and build trust with a community rating.', icon: '✅' },
+                  { step: '1', title: 'Post a Job or Listing', desc: 'Describe what you need done, or snap a photo of what you want to sell locally.', icon: <PenLine size={32} /> },
+                  { step: '2', title: 'Connect & Chat', desc: 'Review bids from verified neighbors, chat securely in real-time, and agree on details.', icon: <Handshake size={32} /> },
+                  { step: '3', title: 'Complete Securely', desc: 'Pay via secure Escrow, get the job done, and build trust with a community rating.', icon: <CheckCircle size={32} /> },
                 ].map((s) => (
                   <div key={s.step} className="hiw-card">
                     <div className="hiw-icon-wrap">
-                      <span style={{ fontSize: '1.8rem' }}>{s.icon}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary-600)' }}>{s.icon}</span>
                     </div>
                     <div style={{ 
                       display: 'inline-block', padding: '2px 12px', background: 'var(--color-primary-50)', 

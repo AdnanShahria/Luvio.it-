@@ -34,7 +34,7 @@ export function Header() {
           {/* LEFT: logo + brand */}
           <div className="nav-left">
             <Link href="/" className="nav-logo-circle" aria-label="Home">
-              <img src="/logo.png" alt="Luvio Logo" className="nav-logo-img" width={24} height={24} />
+              <img src="/logo.png" alt="Luvio Logo" className="nav-logo-img" width={36} height={36} />
             </Link>
             <Link href="/" className="nav-brand-card">
               <span className="nav-brand-name">Luvio</span>
@@ -59,6 +59,7 @@ export function Header() {
           <div className="nav-right">
             {isAuthenticated ? (
               <div className="nav-actions-card">
+                <Link href="/profile" className="nav-dashboard-card" id="header-dashboard-btn" style={{ padding: '8px 16px', marginRight: '8px' }}>Dashboard</Link>
                 <Link href="/notifications" className="nav-icon-btn" aria-label="Notifications" id="header-notifications-btn">🔔</Link>
                 <Link href="/chat"          className="nav-icon-btn" aria-label="Messages"      id="header-chat-btn">💬</Link>
                 <div style={{ position: 'relative' }}>
@@ -106,7 +107,7 @@ export function Header() {
             ) : (
               <div className="nav-auth-card">
                 <Link href="/auth/login" className="nav-signin-text" id="header-login-btn">Sign In</Link>
-                <Link href="/auth/register" className="nav-dashboard-card" id="header-dashboard-btn">Dashboard</Link>
+                <Link href="/auth/register" className="nav-dashboard-card" id="header-signup-btn">Sign Up</Link>
               </div>
             )}
           </div>
