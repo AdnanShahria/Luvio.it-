@@ -13,6 +13,7 @@ import { Hono } from 'hono';
 import type { Env } from '../types';
 import { authMiddleware } from '../middleware/auth';
 import { createDb, schema } from '../db';
+import { executeWrite } from '../db/router';
 import { eq } from 'drizzle-orm';
 import {
   uploadFile,
@@ -84,7 +85,8 @@ profile.put('/', authMiddleware(), async (c) => {
   if (body.locale !== undefined) updates.locale = body.locale;
   if (body.currency !== undefined) updates.currency = body.currency;
 
-  await db.update(schema.users).set(updates).where(eq(schema.users.id, userId));
+  const updateQuery = db.update(schema.users).set(updates).where(eq(schema.users.id, userId));
+  await executeWrite(c.env, updateQuery);
 
   const updated = await db.query.users.findFirst({
     where: eq(schema.users.id, userId),
@@ -151,10 +153,12 @@ profile.post('/avatar', authMiddleware(), async (c) => {
   const result = await uploadFile(c.env, key, file, baseUrl);
 
   // Update user record
-  await db
+  const updateQuery = db
     .update(schema.users)
     .set({ avatarUrl: result.url, updatedAt: new Date().toISOString() })
     .where(eq(schema.users.id, userId));
+  
+  await executeWrite(c.env, updateQuery);
 
   return c.json({
     success: true,
@@ -190,13 +194,15 @@ profile.put('/role', authMiddleware(), async (c) => {
     }, 400);
   }
 
-  await db
+  const roleQuery = db
     .update(schema.users)
     .set({
       role: body.role as 'customer' | 'worker' | 'seller',
       updatedAt: new Date().toISOString(),
     })
     .where(eq(schema.users.id, userId));
+
+  await executeWrite(c.env, roleQuery);
 
   return c.json({ success: true, data: { role: body.role } });
 });

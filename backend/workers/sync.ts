@@ -41,7 +41,16 @@ export async function queueHandler(batch: MessageBatch<SyncTask>, env: Env['Bind
       }
       else if (task.type === 'SYNC_DB_TO_TURSO') {
         console.log(`🔄 Executing DB Backup to Turso`);
-        // Implementation for raw SQL mirroring goes here
+        const { createClient } = await import('@libsql/client');
+        const client = createClient({ 
+          url: env.TURSO_DATABASE_URL, 
+          authToken: env.TURSO_AUTH_TOKEN 
+        });
+        await client.execute({ sql: task.payload.sql, args: task.payload.params });
+      }
+      else if (task.type === 'SYNC_DB_TO_D1') {
+        console.log(`🔄 Executing DB Backup to D1`);
+        await env.DB.prepare(task.payload.sql).bind(...task.payload.params).run();
       }
 
       message.ack(); // Mark as successfully processed
