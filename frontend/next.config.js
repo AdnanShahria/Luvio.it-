@@ -12,7 +12,7 @@ const nextConfig = {
   // Transpile shared workspace package
   transpilePackages: ['@luvio/shared'],
 
-  // Image optimization
+  // Image optimization — allow R2 images served via Worker
   images: {
     remotePatterns: [
       {
@@ -22,6 +22,16 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'luvio.it',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.luvio.it',
+      },
+      {
+        // Local dev: images served via Wrangler dev server
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8788',
       },
     ],
   },

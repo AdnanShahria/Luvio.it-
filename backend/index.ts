@@ -6,13 +6,14 @@
  *   /api/v1/auth/*          → Auth (register, login, OTP, etc.)
  *   /api/v1/jobs/*          → Jobs & Services marketplace
  *   /api/v1/marketplace/*   → Community Market (buy/sell/give)
- *   /api/v1/chat/*          → Real-time messaging
+ *   /api/v1/chat/*          → Real-time messaging (+ WebSocket)
  *   /api/v1/wallet/*        → Wallet, payments, escrow
- *   /api/v1/profile/*       → User profiles
+ *   /api/v1/profile/*       → User profiles & avatar upload
  *   /api/v1/notifications/* → Notification center
  *   /api/v1/maps/*          → Geo/location services
  *   /api/v1/premium/*       → Subscriptions & premium features
  *   /api/v1/admin/*         → Admin dashboard API
+ *   /api/v1/uploads/*       → R2 file serving (avatars, images, media)
  */
 
 import { Hono } from 'hono';
@@ -33,6 +34,7 @@ import { notificationRoutes } from './notifications/routes';
 import { mapRoutes } from './maps/routes';
 import { premiumRoutes } from './premium/routes';
 import { adminRoutes } from './admin/routes';
+import { uploadRoutes } from './upload/routes';
 
 // Create main app
 const app = new Hono<Env>();
@@ -74,6 +76,7 @@ v1.route('/notifications', notificationRoutes);
 v1.route('/maps', mapRoutes);
 v1.route('/premium', premiumRoutes);
 v1.route('/admin', adminRoutes);
+v1.route('/uploads', uploadRoutes);
 
 app.route('/api/v1', v1);
 
