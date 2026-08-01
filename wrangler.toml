@@ -8,6 +8,7 @@ compatibility_flags = ["nodejs_compat"]
 binding = "DB"
 database_name = "luvio-db"
 database_id = "e62470c9-5e78-490f-a2e2-05648ff2db5c"
+migrations_dir = "backend/db/migrations"
 
 # R2 Storage binding
 [[r2_buckets]]
