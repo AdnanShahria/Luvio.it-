@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "npx @cloudflare/next-on-pages",
-    "build:next": "next build",
-    "start": "next start",
+    "build": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && wrangler deploy --config wrangler.toml",
     "lint": "next lint"
   },
   "dependencies": {
@@ -16,11 +16,10 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.0",
+    "@opennextjs/cloudflare": "^1.20.2",
     "@types/node": "^20.14.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "^5.5.0"
   }
 }
-

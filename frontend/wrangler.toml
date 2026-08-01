@@ -1,0 +1,23 @@
+# Luvio Frontend — Cloudflare Worker config for @opennextjs/cloudflare
+# This file is separate from the root wrangler.toml (which configures the backend Worker).
+#
+# Deploy command: wrangler deploy --config frontend/wrangler.toml
+
+name = "luvio-frontend"
+main = ".open-next/worker.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Static assets produced by @opennextjs/cloudflare build
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+# Environment variables (non-secret)
+[vars]
+APP_NAME = "Luvio"
+NODE_ENV = "production"
+
+# Note: API calls from the frontend go to the backend Worker (luvio-platform).
+# Secrets (e.g. NEXT_PUBLIC_API_URL) should be set via:
+#   wrangler secret put NEXT_PUBLIC_API_URL --config frontend/wrangler.toml
