@@ -90,7 +90,7 @@ export default function PremiumPage() {
             </div>
           </div>
         </main>
-        <Footer />
+
         <MobileNav />
       </div>
     </AuthProvider>

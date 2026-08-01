@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
-import { Header, MobileNav, Footer } from '@/components/layout';
+import { Header, MobileNav, Footer, RequireAuth } from '@/components/layout';
 
 function ProfileContent() {
   const { user } = useAuth();
@@ -53,10 +53,12 @@ export default function ProfilePage() {
     <AuthProvider>
       <div className="page-wrapper">
         <Header />
-        <main className="main-content">
-          <ProfileContent />
-        </main>
-        <Footer />
+        <RequireAuth>
+          <main className="main-content">
+            <ProfileContent />
+          </main>
+        </RequireAuth>
+
         <MobileNav />
       </div>
     </AuthProvider>

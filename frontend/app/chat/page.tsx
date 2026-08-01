@@ -2,14 +2,15 @@
 
 import React from 'react';
 import { AuthProvider } from '@/lib/auth-context';
-import { Header, MobileNav } from '@/components/layout';
+import { Header, MobileNav, RequireAuth } from '@/components/layout';
 
 export default function ChatPage() {
   return (
     <AuthProvider>
       <div className="page-wrapper">
         <Header />
-        <main className="main-content" style={{ display: 'flex', height: 'calc(100dvh - var(--header-height))' }}>
+        <RequireAuth>
+          <main className="main-content" style={{ display: 'flex', height: 'calc(100dvh - var(--header-height))' }}>
           {/* Thread List */}
           <div style={{
             width: '100%',
@@ -59,6 +60,7 @@ export default function ChatPage() {
             </div>
           </div>
         </main>
+        </RequireAuth>
         <MobileNav />
       </div>
     </AuthProvider>

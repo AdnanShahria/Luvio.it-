@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Hide Next.js dev indicators
-  devIndicators: {
-    appIsrStatus: false,
-    buildActivity: false,
-  },
-
   // Enable React strict mode for development
   reactStrictMode: true,
 

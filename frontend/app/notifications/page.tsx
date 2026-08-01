@@ -27,7 +27,7 @@ export default function NotificationsPage() {
             </div>
           </div>
         </main>
-        <Footer />
+
         <MobileNav />
       </div>
     </AuthProvider>

@@ -8,7 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AuthProvider } from '@/lib/auth-context';
-import { Header, MobileNav, Footer } from '@/components/layout';
+import { Header, MobileNav, Footer, WaveSeparator } from '@/components/layout';
 import { Briefcase, ShoppingBag, MapPin, MessageCircle, CircleDollarSign, Star, PenLine, Handshake, CheckCircle, Globe, Lock, Smartphone } from 'lucide-react';
 
 /* ─── Service data (All 6 features to rotate) ─── */
@@ -125,12 +125,14 @@ export default function HomePage() {
                 </React.Fragment>
               ))}
             </div>
+            {/* Wavy separator linking into the next section */}
+            <WaveSeparator fillColor="#fff" />
           </section>
 
           {/* ════════════════════════════════════════
               HOW IT WORKS SECTION
               ════════════════════════════════════════ */}
-          <section style={{ padding: 'var(--space-16) var(--space-4)', background: '#fff' }}>
+          <section style={{ padding: 'var(--space-16) var(--space-4)', background: '#fff', position: 'relative' }}>
             <div className="container">
               <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
                 <h2 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-4)' }}>
@@ -142,37 +144,47 @@ export default function HomePage() {
               </div>
 
               <div className="grid grid-cols-3" style={{ gap: 'var(--space-2)', position: 'relative' }}>
-                {/* Connecting Line Background (Desktop only) */}
-                <div className="hiw-line-bg hidden md:block" />
-                {/* Connecting Line Animated Fill (Desktop only) */}
-                <div className="hiw-line-fill hidden md:block" />
+                {/* Connecting Line Background (Desktop) */}
+                <div className="hiw-line-bg" />
+                {/* Connecting Line Animated Fill (Desktop) */}
+                <div className="hiw-line-fill" />
 
                 {[
                   { step: '1', title: 'Post a Job or Listing', desc: 'Describe what you need done, or snap a photo of what you want to sell locally.', icon: <PenLine size={32} /> },
                   { step: '2', title: 'Connect & Chat', desc: 'Review bids from verified neighbors, chat securely in real-time, and agree on details.', icon: <Handshake size={32} /> },
                   { step: '3', title: 'Complete Securely', desc: 'Pay via secure Escrow, get the job done, and build trust with a community rating.', icon: <CheckCircle size={32} /> },
-                ].map((s) => (
+                ].map((s, idx, arr) => (
                   <div key={s.step} className="hiw-card">
+                    {/* Mobile vertical line connecting this to the next one */}
+                    {idx < arr.length - 1 && (
+                      <>
+                        <div className="hiw-card-line-bg" />
+                        <div className="hiw-card-line-fill" />
+                      </>
+                    )}
                     <div className="hiw-icon-wrap">
                       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary-600)' }}>{s.icon}</span>
                     </div>
-                    <div style={{ 
-                      display: 'inline-block', padding: '2px 12px', background: 'var(--color-primary-50)', 
-                      color: 'var(--color-primary-600)', borderRadius: '99px', fontSize: '0.75rem', 
-                      fontWeight: 700, marginBottom: 'var(--space-3)' 
-                    }}>
-                      Step {s.step}
+                    <div className="hiw-content">
+                      <div className="hiw-title-row">
+                        <div className="hiw-step-badge">
+                          Step {s.step}
+                        </div>
+                        <h3 className="hiw-title">
+                          {s.title}
+                        </h3>
+                      </div>
+                      <p className="hiw-desc">
+                        {s.desc}
+                      </p>
                     </div>
-                    <h3 style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: '1.25rem', marginBottom: 'var(--space-3)' }}>
-                      {s.title}
-                    </h3>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                      {s.desc}
-                    </p>
                   </div>
                 ))}
               </div>
             </div>
+            
+            {/* Wavy separator linking into the CTA section */}
+            <WaveSeparator fillColor="#f8f9ff" />
           </section>
 
           {/* ════════════════════════════════════════

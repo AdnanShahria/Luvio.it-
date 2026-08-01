@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { AuthProvider } from '@/lib/auth-context';
-import { Header, MobileNav, Footer } from '@/components/layout';
+import { Header, MobileNav, Footer, RequireAuth } from '@/components/layout';
 import { useListings, type Listing } from '@/lib/hooks';
 
 // ─── Skeleton Card ───────────────────────────────────────────────────────────
@@ -194,8 +194,9 @@ export default function MarketplacePage() {
       `}</style>
       <div className="page-wrapper">
         <Header />
-        <main className="main-content">
-          <div className="container" style={{ padding: 'var(--space-8) var(--space-4)' }}>
+        <RequireAuth>
+          <main className="main-content">
+            <div className="container" style={{ padding: 'var(--space-8) var(--space-4)' }}>
 
             {/* Header row */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-6)', flexWrap: 'wrap', gap: '12px' }}>
@@ -204,7 +205,7 @@ export default function MarketplacePage() {
                   Community Market
                 </h1>
                 <p style={{ color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
-                  {loading ? 'Loading listings…' : `${data?.meta.total ?? 0} listings available`}
+                  {loading ? 'Loading listings…' : `${data?.meta?.total ?? 0} listings available`}
                 </p>
               </div>
               <Link href="/marketplace/create" className="btn btn-primary" id="marketplace-create-btn">
@@ -279,16 +280,17 @@ export default function MarketplacePage() {
             )}
 
             {/* Pagination info */}
-            {!loading && data && data.meta.pages > 1 && (
+            {!loading && data && data.meta?.pages > 1 && (
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                  Page {data.meta.page} of {data.meta.pages} · {data.meta.total} total
+                  Page {data.meta?.page} of {data.meta?.pages} · {data.meta?.total} total
                 </p>
               </div>
             )}
           </div>
         </main>
-        <Footer />
+        </RequireAuth>
+
         <MobileNav />
       </div>
     </AuthProvider>

@@ -58,7 +58,7 @@ export default function WalletPage() {
             </div>
           </div>
         </main>
-        <Footer />
+
         <MobileNav />
       </div>
     </AuthProvider>
