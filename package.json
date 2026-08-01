@@ -23,7 +23,7 @@
     "db:studio": "drizzle-kit studio",
     "deploy": "npm run validate:env && npm run deploy:worker && npm run deploy:frontend",
     "deploy:worker": "wrangler deploy backend/index.ts --config wrangler.toml",
-    "deploy:frontend": "npm run build --workspace=frontend && wrangler deploy --config frontend/wrangler.toml",
+    "deploy:frontend": "npm run build:worker --workspace=frontend && wrangler deploy --config frontend/wrangler.toml",
     "deploy:all": "npm run deploy:worker && npm run deploy:frontend",
     "migrate:remote": "wrangler d1 migrations apply luvio-db --config wrangler.toml --remote",
     "clean": "rimraf node_modules frontend/.next frontend/node_modules backend/node_modules shared/node_modules"
