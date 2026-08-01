@@ -123,7 +123,8 @@ export async function uploadFile(
   bucket: R2Bucket,
   key: string,
   file: File,
-  workerBaseUrl: string
+  workerBaseUrl: string,
+  imgbbApiKey?: string
 ): Promise<UploadResult> {
   const arrayBuffer = await file.arrayBuffer();
 
@@ -138,12 +139,44 @@ export async function uploadFile(
     },
   });
 
+  // Backup to ImgBB asynchronously (fire and forget)
+  // We don't await this so it doesn't block the primary R2 upload response
+  if (imgbbApiKey) {
+     uploadToImgBB(file, imgbbApiKey).catch(console.error);
+  }
+
   return {
     key,
     url: getFileUrl(workerBaseUrl, key),
     contentType: file.type,
     size: file.size,
   };
+}
+
+/**
+ * Upload a File to ImgBB as a backup.
+ */
+export async function uploadToImgBB(file: File, apiKey: string): Promise<string | null> {
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+      method: 'POST',
+      body: formData,
+    });
+    
+    if (!response.ok) {
+      console.error('ImgBB upload failed', await response.text());
+      return null;
+    }
+    
+    const data = await response.json() as any;
+    return data?.data?.url || null;
+  } catch (error) {
+    console.error('ImgBB upload error', error);
+    return null;
+  }
 }
 
 /**
@@ -154,12 +187,13 @@ export async function uploadMultipleFiles(
   bucket: R2Bucket,
   folderPrefix: string,
   files: File[],
-  workerBaseUrl: string
+  workerBaseUrl: string,
+  imgbbApiKey?: string
 ): Promise<string[]> {
   const uploads = files.map(async (file, index) => {
     const ext = mimeToExt(file.type);
     const key = `${folderPrefix}/${index}.${ext}`;
-    const result = await uploadFile(bucket, key, file, workerBaseUrl);
+    const result = await uploadFile(bucket, key, file, workerBaseUrl, imgbbApiKey);
     return { index, url: result.url };
   });
 

@@ -12,6 +12,9 @@ export interface Env {
     REFRESH_TOKEN_SECRET: string;
     JWT_EXPIRES_IN: string;
     REFRESH_TOKEN_EXPIRES_IN: string;
+    TURSO_DATABASE_URL: string;
+    TURSO_AUTH_TOKEN: string;
+    IMGBB_API_KEY: string;
     OTP_SERVICE_API_KEY: string;
     OTP_SERVICE_URL: string;
     SENDPULSE_API_USER_ID: string;

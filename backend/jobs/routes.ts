@@ -146,7 +146,8 @@ jobs.post('/', authMiddleware(), async (c) => {
       c.env.R2_BUCKET,
       `jobs/${jobId}`,
       imageFiles,
-      baseUrl
+      baseUrl,
+      c.env.IMGBB_API_KEY
     );
   }
 

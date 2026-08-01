@@ -9,9 +9,10 @@
     "build": "tsc --noEmit"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.4",
     "@luvio/shared": "*",
-    "hono": "^4.4.0",
     "drizzle-orm": "^0.31.0",
+    "hono": "^4.4.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {

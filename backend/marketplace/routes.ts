@@ -160,7 +160,8 @@ marketplace.post('/', authMiddleware(), async (c) => {
       c.env.R2_BUCKET,
       `listings/${listingId}`,
       imageFiles,
-      baseUrl
+      baseUrl,
+      c.env.IMGBB_API_KEY
     );
   }
 
