@@ -13,6 +13,7 @@
 // ============================================
 // Types
 // ============================================
+import type { Env } from '../types';
 
 export interface UploadResult {
   key: string;
@@ -120,15 +121,14 @@ export const CHAT_MEDIA_RULES: ValidationOptions = {
  * Returns the key and resolved serving URL.
  */
 export async function uploadFile(
-  bucket: R2Bucket,
+  env: Env['Bindings'],
   key: string,
   file: File,
-  workerBaseUrl: string,
-  imgbbApiKey?: string
+  workerBaseUrl: string
 ): Promise<UploadResult> {
   const arrayBuffer = await file.arrayBuffer();
 
-  await bucket.put(key, arrayBuffer, {
+  await env.R2_BUCKET.put(key, arrayBuffer, {
     httpMetadata: {
       contentType: file.type,
       cacheControl: 'public, max-age=31536000, immutable',
@@ -139,10 +139,12 @@ export async function uploadFile(
     },
   });
 
-  // Backup to ImgBB asynchronously (fire and forget)
-  // We don't await this so it doesn't block the primary R2 upload response
-  if (imgbbApiKey) {
-     uploadToImgBB(file, imgbbApiKey).catch(console.error);
+  // Push to sync queue to replicate to ImgBB in background
+  if (env.SYNC_QUEUE) {
+     await env.SYNC_QUEUE.send({
+       type: 'UPLOAD_TO_IMGBB',
+       payload: { key }
+     });
   }
 
   return {
@@ -184,16 +186,15 @@ export async function uploadToImgBB(file: File, apiKey: string): Promise<string 
  * Returns an array of URLs in original order.
  */
 export async function uploadMultipleFiles(
-  bucket: R2Bucket,
+  env: Env['Bindings'],
   folderPrefix: string,
   files: File[],
-  workerBaseUrl: string,
-  imgbbApiKey?: string
+  workerBaseUrl: string
 ): Promise<string[]> {
   const uploads = files.map(async (file, index) => {
     const ext = mimeToExt(file.type);
     const key = `${folderPrefix}/${index}.${ext}`;
-    const result = await uploadFile(bucket, key, file, workerBaseUrl, imgbbApiKey);
+    const result = await uploadFile(env, key, file, workerBaseUrl);
     return { index, url: result.url };
   });
 

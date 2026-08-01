@@ -143,11 +143,10 @@ jobs.post('/', authMiddleware(), async (c) => {
   let imageUrls: string[] = [];
   if (imageFiles.length > 0) {
     imageUrls = await uploadMultipleFiles(
-      c.env.R2_BUCKET,
+      c.env,
       `jobs/${jobId}`,
       imageFiles,
-      baseUrl,
-      c.env.IMGBB_API_KEY
+      baseUrl
     );
   }
 

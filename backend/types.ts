@@ -7,6 +7,8 @@ export interface Env {
   Bindings: {
     DB: D1Database;
     R2_BUCKET: R2Bucket;
+    HEALTH_STATE: KVNamespace;
+    SYNC_QUEUE: Queue;
     CHAT_ROOM: DurableObjectNamespace;
     JWT_SECRET: string;
     REFRESH_TOKEN_SECRET: string;

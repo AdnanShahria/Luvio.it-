@@ -178,7 +178,7 @@ chat.post('/threads/:threadId/media', authMiddleware(), async (c) => {
   const ext = mimeToExt(file.type);
   const key = `chat/${threadId}/${fileId}.${ext}`;
   const baseUrl = getWorkerBaseUrl(c.req.url);
-  const result = await uploadFile(c.env.R2_BUCKET, key, file, baseUrl, c.env.IMGBB_API_KEY);
+  const result = await uploadFile(c.env, key, file, baseUrl);
 
   return c.json({
     success: true,

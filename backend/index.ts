@@ -95,6 +95,16 @@ app.all('/api/*', (c) => {
 // ============================================
 app.onError(errorHandler);
 
-export default app;
+import { checkAllServices } from './core/health';
+import { queueHandler } from './workers/sync';
+
+export default {
+  fetch: app.fetch,
+  scheduled: async (event: any, env: Env, ctx: any) => {
+    ctx.waitUntil(checkAllServices(env));
+  },
+  queue: queueHandler,
+};
+
 export type AppType = typeof app;
 export { ChatRoom } from './chat/room';

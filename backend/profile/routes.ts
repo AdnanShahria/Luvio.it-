@@ -148,7 +148,7 @@ profile.post('/avatar', authMiddleware(), async (c) => {
   const ext = mimeToExt(file.type);
   const key = `avatars/${userId}.${ext}`;
   const baseUrl = getWorkerBaseUrl(c.req.url);
-  const result = await uploadFile(c.env.R2_BUCKET, key, file, baseUrl, c.env.IMGBB_API_KEY);
+  const result = await uploadFile(c.env, key, file, baseUrl);
 
   // Update user record
   await db
