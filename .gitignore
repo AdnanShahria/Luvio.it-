@@ -14,6 +14,7 @@ node_modules/
 # Next.js
 frontend/.next/
 frontend/out/
+frontend/.open-next/
 
 # Build artifacts
 dist/
