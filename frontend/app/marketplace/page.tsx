@@ -181,7 +181,7 @@ export default function MarketplacePage() {
   const listings = data?.data ?? [];
 
   return (
-    <AuthProvider>
+    <>
       <style>{`
         @keyframes shimmer {
           0% { background-position: -200% 0; }
@@ -293,6 +293,6 @@ export default function MarketplacePage() {
 
         <MobileNav />
       </div>
-    </AuthProvider>
+    </>
   );
 }

@@ -65,14 +65,18 @@ class ApiClient {
     }
 
     const url = path.startsWith('http') ? path : `${API_BASE}${path}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     try {
       const response = await fetch(url, {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
         ...restOptions,
       });
+      clearTimeout(timeoutId);
 
       // Try to refresh token on 401
       if (response.status === 401 && !skipAuth && this.refreshToken) {

@@ -7,7 +7,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { AuthProvider } from '@/lib/auth-context';
 import { Header, MobileNav, Footer, WaveSeparator } from '@/components/layout';
 import { Briefcase, ShoppingBag, MapPin, MessageCircle, CircleDollarSign, Star, PenLine, Handshake, CheckCircle, Globe, Lock, Smartphone } from 'lucide-react';
 
@@ -23,8 +22,7 @@ const ALL_SERVICES = [
 
 export default function HomePage() {
   return (
-    <AuthProvider>
-      <div className="page-wrapper">
+    <div className="page-wrapper">
         <Header />
 
         <main style={{ background: '#f8f9ff' }}>
@@ -63,10 +61,10 @@ export default function HomePage() {
 
                 {/* CTA row */}
                 <div className="hero-cta-row">
-                  <Link href="/auth/register" className="btn btn-primary btn-lg" id="hero-get-started-btn">
+                  <Link href="/auth/register" className="btn btn-primary btn-lg hero-cta-btn" id="hero-get-started-btn">
                     Get Started — Free
                   </Link>
-                  <Link href="/jobs" className="btn btn-secondary btn-lg" id="hero-browse-jobs-btn">
+                  <Link href="/jobs" className="btn btn-secondary btn-lg hero-cta-btn" id="hero-browse-jobs-btn">
                     Browse Jobs
                   </Link>
                 </div>
@@ -220,13 +218,11 @@ export default function HomePage() {
                 <p style={{ color: 'var(--text-secondary)', maxWidth: '30rem', margin: '0 auto var(--space-10)', lineHeight: '1.6', fontSize: '1.125rem' }}>
                   Sign up for free and start connecting, earning, and sharing with your neighborhood today.
                 </p>
-                <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <Link href="/auth/register" className="btn btn-primary btn-lg" id="cta-register-btn"
-                    style={{ padding: '0 32px', height: '56px', fontSize: '1.1rem', boxShadow: '0 12px 32px rgba(84,101,255,0.3)', borderRadius: '999px' }}>
+                <div className="bottom-cta-row">
+                  <Link href="/auth/register" className="btn btn-primary btn-lg bottom-cta-btn bottom-cta-btn-primary" id="cta-register-btn">
                     Create Free Account
                   </Link>
-                  <Link href="/jobs" className="btn btn-lg" id="cta-learn-btn"
-                    style={{ padding: '0 32px', height: '56px', fontSize: '1.1rem', background: 'rgba(255,255,255,0.7)', color: 'var(--text-primary)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '999px', backdropFilter: 'blur(8px)' }}>
+                  <Link href="/jobs" className="btn btn-lg bottom-cta-btn bottom-cta-btn-secondary" id="cta-learn-btn">
                     Browse Jobs
                   </Link>
                 </div>
@@ -238,6 +234,5 @@ export default function HomePage() {
         <Footer />
         <MobileNav />
       </div>
-    </AuthProvider>
   );
 }

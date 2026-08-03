@@ -145,7 +145,7 @@ export default function JobsPage() {
   const jobs = data?.data ?? [];
 
   return (
-    <AuthProvider>
+    <>
       <style>{`
         @keyframes shimmer {
           0% { background-position: -200% 0; }
@@ -243,6 +243,6 @@ export default function JobsPage() {
 
         <MobileNav />
       </div>
-    </AuthProvider>
+    </>
   );
 }

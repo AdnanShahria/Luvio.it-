@@ -50,17 +50,15 @@ function ProfileContent() {
 
 export default function ProfilePage() {
   return (
-    <AuthProvider>
-      <div className="page-wrapper">
-        <Header />
-        <RequireAuth>
-          <main className="main-content">
-            <ProfileContent />
-          </main>
-        </RequireAuth>
+    <div className="page-wrapper">
+      <Header />
+      <RequireAuth>
+        <main className="main-content">
+          <ProfileContent />
+        </main>
+      </RequireAuth>
 
-        <MobileNav />
-      </div>
-    </AuthProvider>
+      <MobileNav />
+    </div>
   );
 }

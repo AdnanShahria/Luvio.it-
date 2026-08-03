@@ -6,8 +6,7 @@ import { Header, MobileNav, RequireAuth } from '@/components/layout';
 
 export default function ChatPage() {
   return (
-    <AuthProvider>
-      <div className="page-wrapper">
+    <div className="page-wrapper">
         <Header />
         <RequireAuth>
           <main className="main-content" style={{ display: 'flex', height: 'calc(100dvh - var(--header-height))' }}>
@@ -63,6 +62,5 @@ export default function ChatPage() {
         </RequireAuth>
         <MobileNav />
       </div>
-    </AuthProvider>
   );
 }

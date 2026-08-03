@@ -21,70 +21,72 @@ export default function AdminPage() {
   ];
 
   return (
-    <AuthProvider>
-      <div className="page-wrapper">
-        <Header />
-        <main className="main-content">
-          <div style={{ display: 'flex', minHeight: 'calc(100dvh - var(--header-height))' }}>
-            {/* Sidebar */}
-            <aside style={{
-              width: 'var(--sidebar-width)',
-              borderRight: '1px solid var(--border-color)',
-              padding: 'var(--space-4)',
-              background: 'var(--bg-secondary)',
-            }}>
-              <h2 style={{ fontWeight: 'var(--font-weight-bold)', fontSize: 'var(--font-size-lg)', marginBottom: 'var(--space-6)', padding: '0 var(--space-3)' }}>
-                Admin
-              </h2>
-              <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-                {navItems.map(item => (
-                  <Link key={item.href} href={item.href} className="header-nav-link" style={{ display: 'block', padding: 'var(--space-3)' }}>
-                    {item.icon} {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </aside>
+    <div className="page-wrapper">
+      <Header />
+      <main className="main-content">
+        <div style={{ display: 'flex', minHeight: 'calc(100dvh - var(--header-height))' }}>
+          {/* Sidebar */}
+          <aside style={{
+            width: '16rem',
+            borderRight: '1px solid var(--border-color)',
+            padding: 'var(--space-6)',
+          }}>
+            <h2 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-6)' }}>
+              Admin Panel
+            </h2>
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 'var(--space-3)',
+                    padding: 'var(--space-3) var(--space-4)',
+                    borderRadius: 'var(--radius-lg)',
+                    color: 'var(--text-secondary)',
+                    fontWeight: 'var(--font-weight-medium)',
+                  }}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </nav>
+          </aside>
 
-            {/* Main Content */}
-            <div style={{ flex: 1, padding: 'var(--space-8)' }}>
-              <h1 style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-6)' }}>
-                Dashboard Overview
-              </h1>
+          {/* Content */}
+          <div style={{ flex: 1, padding: 'var(--space-8)' }}>
+            <h1 style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-6)' }}>
+              Dashboard Overview
+            </h1>
 
-              <div className="grid grid-cols-4" style={{ marginBottom: 'var(--space-8)' }}>
-                {stats.map(stat => (
-                  <div key={stat.label} className="card" style={{ padding: 'var(--space-5)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div>
-                        <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--text-tertiary)' }}>{stat.label}</p>
-                        <p style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)', marginTop: 'var(--space-1)' }}>{stat.value}</p>
-                      </div>
-                      <div style={{
-                        width: '3rem',
-                        height: '3rem',
-                        borderRadius: 'var(--radius-lg)',
-                        background: `${stat.color}15`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '1.5rem',
-                      }}>
-                        {stat.icon}
-                      </div>
-                    </div>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-4" style={{ marginBottom: 'var(--space-8)' }}>
+              {stats.map((stat) => (
+                <div key={stat.label} className="card">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-2)' }}>
+                    <span style={{ color: 'var(--text-tertiary)', fontSize: 'var(--font-size-sm)' }}>{stat.label}</span>
+                    <span style={{ fontSize: '1.25rem' }}>{stat.icon}</span>
                   </div>
-                ))}
-              </div>
+                  <p style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)', color: stat.color }}>
+                    {stat.value}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-              <div className="card" style={{ textAlign: 'center', padding: 'var(--space-12)' }}>
-                <p style={{ color: 'var(--text-secondary)' }}>
-                  Full admin dashboard coming in Phase 4
-                </p>
-              </div>
+            <div className="card" style={{ textAlign: 'center', padding: 'var(--space-16)' }}>
+              <div style={{ fontSize: '4rem', marginBottom: 'var(--space-4)' }}>🛠️</div>
+              <h3 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-2)' }}>Admin Management</h3>
+              <p style={{ color: 'var(--text-secondary)' }}>
+                Full admin dashboard coming in Phase 4
+              </p>
             </div>
           </div>
-        </main>
-      </div>
-    </AuthProvider>
+        </div>
+      </main>
+    </div>
   );
 }
