@@ -7,7 +7,7 @@ interface WaveSeparatorProps {
 
 export function WaveSeparator({ fillColor = '#fff', flip = true }: WaveSeparatorProps) {
   return (
-    <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 10, pointerEvents: 'none' }}>
+    <div suppressHydrationWarning style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 10, pointerEvents: 'none' }}>
       <svg 
         viewBox="0 0 1200 120" 
         preserveAspectRatio="none" 

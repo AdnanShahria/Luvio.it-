@@ -33,7 +33,8 @@ export function MobileNav() {
 
   return (
     <nav className="mobile-nav glass" role="navigation" aria-label="Mobile navigation">
-      <div 
+      <div
+        suppressHydrationWarning
         className="nav-active-indicator"
         style={{
           transform: `translateX(${activeIndex >= 0 ? activeIndex * 100 : 0}%)`,
@@ -41,7 +42,7 @@ export function MobileNav() {
           width: `${100 / navItems.length}%`
         }}
       >
-        <div className="nav-active-pill" />
+        <div suppressHydrationWarning className="nav-active-pill" />
       </div>
       {navItems.map((item, index) => {
         const isActive = activeIndex === index;
