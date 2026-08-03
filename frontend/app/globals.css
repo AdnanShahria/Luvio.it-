@@ -725,7 +725,7 @@ ul, ol {
    ============================================ */
 
 .mobile-nav {
-  display: flex;
+  display: none; /* hidden by default on desktop */
   position: fixed;
   bottom: 0;
   left: 0;
@@ -734,10 +734,16 @@ ul, ol {
   align-items: center;
   justify-content: space-around;
   padding: 0 var(--space-2);
-  z-index: var(--z-fixed);
+  z-index: 9999;
   border-top: 1.5px solid rgba(138, 43, 226, 0.3); /* slightly violet colored border */
   border-radius: 28px 28px 0 0;
   box-shadow: 0 -4px 20px rgba(84, 101, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+  }
 }
 
 .nav-active-indicator {
@@ -762,11 +768,6 @@ ul, ol {
   box-shadow: 0 4px 16px rgba(84, 101, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
-@media (min-width: 768px) {
-  .mobile-nav {
-    display: none;
-  }
-}
 
 .mobile-nav-item {
   display: flex;
@@ -843,17 +844,15 @@ ul, ol {
 /* Page Transition Animations */
 .page-transition-container {
   animation: pageTransitionEnter 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity;
+  will-change: opacity;
 }
 
 @keyframes pageTransitionEnter {
   0% {
     opacity: 0;
-    transform: translateY(10px) scale(0.994);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 
@@ -1921,5 +1920,67 @@ ul, ol {
     justify-content: center;
     text-align: center;
     white-space: nowrap;
+  }
+}
+
+/* ============================================
+   FOOTER STYLES
+   ============================================ */
+
+/* Mobile Layout for Footer */
+@media (max-width: 767px) {
+  .footer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-brand-col p {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .footer-nav-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .footer-app-col {
+    width: 100%;
+  }
+
+  .footer-app-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  
+  .footer-bottom-bar {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: var(--space-8);
+  }
+  
+  .footer-nav-row {
+    display: contents;
+  }
+  
+  .footer-app-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
   }
 }

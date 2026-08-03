@@ -30,7 +30,7 @@ export default function PremiumPage() {
   ];
 
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
       <Header />
       <main className="main-content">
         <div className="container" style={{ padding: 'var(--space-12) var(--space-4)', textAlign: 'center' }}>

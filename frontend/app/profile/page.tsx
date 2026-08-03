@@ -50,7 +50,7 @@ function ProfileContent() {
 
 export default function ProfilePage() {
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
       <Header />
       <RequireAuth>
         <main className="main-content">

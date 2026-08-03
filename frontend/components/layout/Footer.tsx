@@ -31,47 +31,49 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Platform */}
-          <div className="footer-nav-col">
-            <h4 style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: 'var(--space-6)', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-primary)' }}>
-              Platform
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              {[
-                { label: 'Jobs & Services', href: '/jobs' },
-                { label: 'Marketplace', href: '/marketplace' },
-                { label: 'Explore', href: '/maps' },
-                { label: 'Premium', href: '/premium' },
-              ].map((item) => (
-                <Link key={item.label} href={item.href} style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', transition: 'all 0.2s ease', display: 'inline-block' }} 
-                  onMouseOver={(e) => { e.currentTarget.style.color = 'var(--color-primary-600)'; e.currentTarget.style.transform = 'translateX(4px)'; }}
-                  onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.transform = 'translateX(0)'; }}
-                >
-                  {item.label}
-                </Link>
-              ))}
+          <div className="footer-nav-row">
+            {/* Platform */}
+            <div className="footer-nav-col">
+              <h4 style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: 'var(--space-6)', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-primary)' }}>
+                Platform
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                {[
+                  { label: 'Jobs & Services', href: '/jobs' },
+                  { label: 'Marketplace', href: '/marketplace' },
+                  { label: 'Explore', href: '/maps' },
+                  { label: 'Premium', href: '/premium' },
+                ].map((item) => (
+                  <Link key={item.label} href={item.href} style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', transition: 'all 0.2s ease', display: 'inline-block' }} 
+                    onMouseOver={(e) => { e.currentTarget.style.color = 'var(--color-primary-600)'; e.currentTarget.style.transform = 'translateX(4px)'; }}
+                    onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.transform = 'translateX(0)'; }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Company */}
-          <div className="footer-nav-col">
-            <h4 style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: 'var(--space-6)', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-primary)' }}>
-              Company
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-              {[
-                { label: 'About Us', href: '/' },
-                { label: 'Privacy Policy', href: '/privacy' },
-                { label: 'Terms of Service', href: '/terms' },
-                { label: 'Contact Support', href: '/chat' },
-              ].map((item) => (
-                <Link key={item.label} href={item.href} style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', transition: 'all 0.2s ease', display: 'inline-block' }} 
-                  onMouseOver={(e) => { e.currentTarget.style.color = 'var(--color-primary-600)'; e.currentTarget.style.transform = 'translateX(4px)'; }}
-                  onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.transform = 'translateX(0)'; }}
-                >
-                  {item.label}
-                </Link>
-              ))}
+            {/* Company */}
+            <div className="footer-nav-col">
+              <h4 style={{ fontWeight: 700, fontSize: '0.85rem', marginBottom: 'var(--space-6)', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-primary)' }}>
+                Company
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                {[
+                  { label: 'About Us', href: '/' },
+                  { label: 'Privacy Policy', href: '/privacy' },
+                  { label: 'Terms of Service', href: '/terms' },
+                  { label: 'Contact Support', href: '/chat' },
+                ].map((item) => (
+                  <Link key={item.label} href={item.href} style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', transition: 'all 0.2s ease', display: 'inline-block' }} 
+                    onMouseOver={(e) => { e.currentTarget.style.color = 'var(--color-primary-600)'; e.currentTarget.style.transform = 'translateX(4px)'; }}
+                    onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.transform = 'translateX(0)'; }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
 

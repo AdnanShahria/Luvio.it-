@@ -6,7 +6,7 @@ import { Header, MobileNav, RequireAuth } from '@/components/layout';
 
 export default function ChatPage() {
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
         <Header />
         <RequireAuth>
           <main className="main-content" style={{ display: 'flex', height: 'calc(100dvh - var(--header-height))' }}>

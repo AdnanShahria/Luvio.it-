@@ -6,7 +6,7 @@ import { Header, MobileNav, Footer } from '@/components/layout';
 
 export default function NotificationsPage() {
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
       <Header />
       <main className="main-content">
         <div className="container" style={{ padding: 'var(--space-8) var(--space-4)', maxWidth: '40rem' }}>

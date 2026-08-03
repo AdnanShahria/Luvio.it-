@@ -22,7 +22,7 @@ const ALL_SERVICES = [
 
 export default function HomePage() {
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
         <Header />
 
         <main style={{ background: '#f8f9ff' }}>
@@ -32,13 +32,13 @@ export default function HomePage() {
               ════════════════════════════════════════ */}
           <section className="hero-section">
             {/* Ambient background blobs */}
-            <div className="hero-blob hero-blob-1" />
-            <div className="hero-blob hero-blob-2" />
+            <div className="hero-blob hero-blob-1" suppressHydrationWarning />
+            <div className="hero-blob hero-blob-2" suppressHydrationWarning />
 
-            <div className="hero-inner container">
+            <div className="hero-inner container" suppressHydrationWarning>
 
               {/* ── LEFT: Text + Services ── */}
-              <div className="hero-left animate-fade-in-up">
+              <div className="hero-left animate-fade-in-up" suppressHydrationWarning>
 
                 {/* Eyebrow badge */}
                 <span className="hero-badge">
@@ -60,7 +60,7 @@ export default function HomePage() {
                 </p>
 
                 {/* CTA row */}
-                <div className="hero-cta-row">
+                <div className="hero-cta-row" suppressHydrationWarning>
                   <Link href="/auth/register" className="btn btn-primary btn-lg hero-cta-btn" id="hero-get-started-btn">
                     Get Started — Free
                   </Link>
@@ -70,16 +70,16 @@ export default function HomePage() {
                 </div>
 
                 {/* ── Service Pills (Infinite Marquee) ── */}
-                <div className="hero-services-wrapper">
-                  <div className="hero-services-ticker">
+                <div className="hero-services-wrapper" suppressHydrationWarning>
+                  <div className="hero-services-ticker" suppressHydrationWarning>
                     {/* Render the array twice to create a seamless infinite loop */}
                     {[...ALL_SERVICES, ...ALL_SERVICES].map((s, idx) => (
-                      <div key={idx} className="hero-service-card">
-                        <div className="hero-service-header">
+                      <div key={idx} className="hero-service-card" suppressHydrationWarning>
+                        <div className="hero-service-header" suppressHydrationWarning>
                           <span className="hero-service-icon">{s.icon}</span>
-                          <div className="hero-service-title">{s.label}</div>
+                          <div className="hero-service-title" suppressHydrationWarning>{s.label}</div>
                         </div>
-                        <div className="hero-service-desc">{s.desc}</div>
+                        <div className="hero-service-desc" suppressHydrationWarning>{s.desc}</div>
                       </div>
                     ))}
                   </div>
@@ -87,8 +87,8 @@ export default function HomePage() {
               </div>
 
               {/* ── RIGHT: Hero Visual Banner ── */}
-              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <div style={{ 
+              <div className="hero-right animate-fade-in" style={{ animationDelay: '0.15s', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} suppressHydrationWarning>
+                <div suppressHydrationWarning style={{ 
                   position: 'relative', 
                   width: '100%', 
                   maxWidth: '560px',
@@ -107,7 +107,7 @@ export default function HomePage() {
             </div>
 
             {/* Trust bar */}
-            <div className="hero-trust container animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div className="hero-trust container animate-fade-in" style={{ animationDelay: '0.4s' }} suppressHydrationWarning>
               {[
                 { text: '210+ Countries', icon: <Globe size={18} /> },
                 { text: 'Real-time Chat', icon: <MessageCircle size={18} /> },
@@ -131,8 +131,8 @@ export default function HomePage() {
               HOW IT WORKS SECTION
               ════════════════════════════════════════ */}
           <section style={{ padding: 'var(--space-16) var(--space-4)', background: '#fff', position: 'relative' }}>
-            <div className="container">
-              <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
+            <div className="container" suppressHydrationWarning>
+              <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }} suppressHydrationWarning>
                 <h2 style={{ fontSize: 'var(--font-size-3xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-4)' }}>
                   How Luvio Works
                 </h2>
@@ -141,31 +141,31 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-3" style={{ gap: 'var(--space-2)', position: 'relative' }}>
+              <div className="grid grid-cols-3" style={{ gap: 'var(--space-2)', position: 'relative' }} suppressHydrationWarning>
                 {/* Connecting Line Background (Desktop) */}
-                <div className="hiw-line-bg" />
+                <div className="hiw-line-bg" suppressHydrationWarning />
                 {/* Connecting Line Animated Fill (Desktop) */}
-                <div className="hiw-line-fill" />
+                <div className="hiw-line-fill" suppressHydrationWarning />
 
                 {[
                   { step: '1', title: 'Post a Job or Listing', desc: 'Describe what you need done, or snap a photo of what you want to sell locally.', icon: <PenLine size={32} /> },
                   { step: '2', title: 'Connect & Chat', desc: 'Review bids from verified neighbors, chat securely in real-time, and agree on details.', icon: <Handshake size={32} /> },
                   { step: '3', title: 'Complete Securely', desc: 'Pay via secure Escrow, get the job done, and build trust with a community rating.', icon: <CheckCircle size={32} /> },
                 ].map((s, idx, arr) => (
-                  <div key={s.step} className="hiw-card">
+                  <div key={s.step} className="hiw-card" suppressHydrationWarning>
                     {/* Mobile vertical line connecting this to the next one */}
                     {idx < arr.length - 1 && (
                       <>
-                        <div className="hiw-card-line-bg" />
-                        <div className="hiw-card-line-fill" />
+                        <div className="hiw-card-line-bg" suppressHydrationWarning />
+                        <div className="hiw-card-line-fill" suppressHydrationWarning />
                       </>
                     )}
-                    <div className="hiw-icon-wrap">
+                    <div className="hiw-icon-wrap" suppressHydrationWarning>
                       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary-600)' }}>{s.icon}</span>
                     </div>
-                    <div className="hiw-content">
-                      <div className="hiw-title-row">
-                        <div className="hiw-step-badge">
+                    <div className="hiw-content" suppressHydrationWarning>
+                      <div className="hiw-title-row" suppressHydrationWarning>
+                        <div className="hiw-step-badge" suppressHydrationWarning>
                           Step {s.step}
                         </div>
                         <h3 className="hiw-title">
@@ -190,12 +190,12 @@ export default function HomePage() {
               ════════════════════════════════════════ */}
           <section style={{ padding: 'var(--space-20) var(--space-4)', textAlign: 'center', background: '#f8f9ff', position: 'relative', overflow: 'hidden' }}>
             {/* Decorative background orbs for the glass effect to interact with */}
-            <div style={{ position: 'absolute', top: '10%', left: '15%', width: '400px', height: '400px', background: 'rgba(84, 101, 255, 0.4)', borderRadius: '50%', filter: 'blur(120px)', opacity: 0.6, zIndex: 0 }} />
-            <div style={{ position: 'absolute', bottom: '0%', right: '10%', width: '500px', height: '500px', background: 'rgba(167, 139, 250, 0.3)', borderRadius: '50%', filter: 'blur(140px)', opacity: 0.6, zIndex: 0 }} />
-            <div style={{ position: 'absolute', top: '40%', left: '40%', width: '300px', height: '300px', background: 'rgba(96, 165, 250, 0.3)', borderRadius: '50%', filter: 'blur(100px)', opacity: 0.5, zIndex: 0 }} />
+            <div suppressHydrationWarning style={{ position: 'absolute', top: '10%', left: '15%', width: '400px', height: '400px', background: 'rgba(84, 101, 255, 0.4)', borderRadius: '50%', filter: 'blur(120px)', opacity: 0.6, zIndex: 0 }} />
+            <div suppressHydrationWarning style={{ position: 'absolute', bottom: '0%', right: '10%', width: '500px', height: '500px', background: 'rgba(167, 139, 250, 0.3)', borderRadius: '50%', filter: 'blur(140px)', opacity: 0.6, zIndex: 0 }} />
+            <div suppressHydrationWarning style={{ position: 'absolute', top: '40%', left: '40%', width: '300px', height: '300px', background: 'rgba(96, 165, 250, 0.3)', borderRadius: '50%', filter: 'blur(100px)', opacity: 0.5, zIndex: 0 }} />
 
-            <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ 
+            <div className="container" suppressHydrationWarning style={{ position: 'relative', zIndex: 1 }}>
+              <div suppressHydrationWarning style={{ 
                 borderRadius: '32px', 
                 padding: 'var(--space-16) var(--space-8)', 
                 background: 'rgba(255, 255, 255, 0.45)',
@@ -210,7 +210,7 @@ export default function HomePage() {
                 overflow: 'hidden'
               }}>
                 {/* Inner shine */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%)' }} />
+                <div suppressHydrationWarning style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%)' }} />
                 
                 <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: 'var(--space-4)', letterSpacing: '-0.02em' }}>
                   Ready to Join Your <span style={{ color: 'var(--color-primary-600)' }}>Community?</span>
@@ -218,7 +218,7 @@ export default function HomePage() {
                 <p style={{ color: 'var(--text-secondary)', maxWidth: '30rem', margin: '0 auto var(--space-10)', lineHeight: '1.6', fontSize: '1.125rem' }}>
                   Sign up for free and start connecting, earning, and sharing with your neighborhood today.
                 </p>
-                <div className="bottom-cta-row">
+                <div className="bottom-cta-row" suppressHydrationWarning>
                   <Link href="/auth/register" className="btn btn-primary btn-lg bottom-cta-btn bottom-cta-btn-primary" id="cta-register-btn">
                     Create Free Account
                   </Link>

@@ -21,7 +21,7 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
       <Header />
       <main className="main-content">
         <div style={{ display: 'flex', minHeight: 'calc(100dvh - var(--header-height))' }}>

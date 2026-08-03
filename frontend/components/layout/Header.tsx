@@ -32,7 +32,7 @@ export function Header() {
         <nav className="nav-inner" role="navigation" aria-label="Main navigation">
 
           {/* LEFT: logo + brand */}
-          <div className="nav-left">
+          <div className="nav-left" suppressHydrationWarning>
             <Link href="/" className="nav-logo-circle" aria-label="Home">
               <img src="/logo.png" alt="Luvio Logo" className="nav-logo-img" width={36} height={36} />
             </Link>
@@ -42,21 +42,21 @@ export function Header() {
           </div>
 
           {/* CENTRE: nav links (Segmented Pill) */}
-          <div className="nav-center">
-            <div className="nav-links-pill">
+          <div className="nav-center" suppressHydrationWarning>
+            <div className="nav-links-pill" suppressHydrationWarning>
               {navLinks.map((l, index) => (
                 <React.Fragment key={l.href}>
                   <Link href={l.href} className="nav-link-segment">
                     {l.label}
                   </Link>
-                  {index < navLinks.length - 1 && <div className="nav-segment-divider" />}
+                  {index < navLinks.length - 1 && <div className="nav-segment-divider" suppressHydrationWarning />}
                 </React.Fragment>
               ))}
             </div>
           </div>
 
           {/* RIGHT: actions / dashboard card */}
-          <div className="nav-right">
+          <div className="nav-right" suppressHydrationWarning>
             {isAuthenticated ? (
               <div className="nav-actions-card">
                 <Link href="/profile" className="nav-dashboard-card" id="header-dashboard-btn" style={{ padding: '8px 16px', marginRight: '8px' }}>Dashboard</Link>
@@ -105,7 +105,7 @@ export function Header() {
                 </div>
               </div>
             ) : (
-              <div className="nav-auth-card">
+              <div className="nav-auth-card" suppressHydrationWarning>
                 <Link href="/auth/login" className="nav-signin-text" id="header-login-btn">Sign In</Link>
                 <Link href="/auth/register" className="nav-dashboard-card" id="header-signup-btn">Sign Up</Link>
               </div>

@@ -5,7 +5,7 @@ import { Header, MobileNav, Footer } from '@/components/layout';
 
 export default function MapsPage() {
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper" suppressHydrationWarning>
       <Header />
       <main className="main-content">
         <div style={{ height: 'calc(100dvh - var(--header-height))', position: 'relative' }}>

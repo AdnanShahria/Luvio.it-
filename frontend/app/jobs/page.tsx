@@ -156,7 +156,7 @@ export default function JobsPage() {
           50% { opacity: 0.7; }
         }
       `}</style>
-      <div className="page-wrapper">
+      <div className="page-wrapper" suppressHydrationWarning>
         <Header />
         <RequireAuth>
           <main className="main-content">
