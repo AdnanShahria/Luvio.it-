@@ -14,8 +14,8 @@ export function corsMiddleware() {
       if (!origin) return '*';
 
       const allowedOrigins = [
-        'http://localhost:3000',   // Next.js dev
-        'http://localhost:8788',   // Wrangler dev
+        'http://localhost:2222',   // Next.js dev
+        'http://localhost:2223',   // Wrangler dev
         'https://luvio.it',       // Production
         'https://www.luvio.it',
       ];

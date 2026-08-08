@@ -43,7 +43,7 @@ function LoginForm() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <Link href="/" className="header-logo" style={{ display: 'inline-block', marginBottom: 'var(--space-4)' }}>
+          <Link href="/" className="header-logo" style={{ display: 'inline-block', marginBottom: 'var(--space-2)' }}>
             <span className="gradient-text" style={{ fontSize: 'var(--font-size-3xl)' }}>Luvio</span>
           </Link>
           <h1 className="auth-title">Welcome Back</h1>
@@ -51,7 +51,7 @@ function LoginForm() {
         </div>
 
         {/* Social Login */}
-        <div className="auth-social-buttons" style={{ marginBottom: 'var(--space-6)' }}>
+        <div className="auth-social-buttons" style={{ marginBottom: 'var(--space-3)' }}>
           <button className="btn btn-secondary" style={{ flex: 1 }} id="login-google-btn" type="button" onClick={() => alert('Social authentication is coming soon!')}>
             <span>🔵</span> Google
           </button>

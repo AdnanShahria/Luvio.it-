@@ -25,7 +25,7 @@ const nextConfig = {
         // Local dev: images served via Wrangler dev server
         protocol: 'http',
         hostname: 'localhost',
-        port: '8788',
+        port: '2223',
       },
     ],
   },
@@ -35,7 +35,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8788/api/:path*',
+        destination: 'http://localhost:2223/api/:path*',
       },
     ];
   },

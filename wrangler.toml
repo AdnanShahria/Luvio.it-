@@ -36,16 +36,17 @@ binding = "HEALTH_STATE"
 id = "REPLACE_WITH_KV_ID"
 preview_id = "REPLACE_WITH_PREVIEW_ID"
 
-# Synchronization Queues
-[[queues.producers]]
-binding = "SYNC_QUEUE"
-queue = "luvio-sync-queue"
-
-[[queues.consumers]]
-queue = "luvio-sync-queue"
-max_batch_size = 10
-max_batch_timeout = 5
-max_retries = 10
+# Synchronization Queues — DISABLED (requires Cloudflare Workers Paid plan)
+# Uncomment when upgrading to paid plan and run: wrangler queues create luvio-sync-queue
+# [[queues.producers]]
+# binding = "SYNC_QUEUE"
+# queue = "luvio-sync-queue"
+#
+# [[queues.consumers]]
+# queue = "luvio-sync-queue"
+# max_batch_size = 10
+# max_batch_timeout = 5
+# max_retries = 10
 
 # Health Monitoring Cron
 [triggers]

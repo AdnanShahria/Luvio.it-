@@ -175,9 +175,9 @@ function printRoutes() {
   blank();
 
   const routes = [
-    [`${c.bGreen}Frontend${c.reset}`, `http://localhost:${c.bCyan}3000${c.reset}`],
-    [`${c.bYellow}Backend API${c.reset}`, `http://localhost:${c.bCyan}8787${c.reset}`],
-    [`${c.bMagenta}Admin Panel${c.reset}`, `http://localhost:${c.bCyan}3000${c.reset}/admin`],
+    [`${c.bGreen}Frontend${c.reset}`, `http://localhost:${c.bCyan}2222${c.reset}`],
+    [`${c.bYellow}Backend API${c.reset}`, `http://localhost:${c.bCyan}2223${c.reset}`],
+    [`${c.bMagenta}Admin Panel${c.reset}`, `http://localhost:${c.bCyan}2222${c.reset}/admin`],
     [`${c.bBlue}DB Studio${c.reset}`, `${c.dim}npm run db:studio${c.reset}`],
   ];
 
@@ -245,8 +245,8 @@ async function boot() {
     'Loading shared workspace (types & schemas) …',
     'Connecting to Cloudflare D1 (local) …',
     'Initialising Drizzle ORM …',
-    'Starting Hono edge worker (port 8787) …',
-    'Warming up Next.js 15 compiler (port 3000) …',
+    'Starting Hono edge worker (port 2223) …',
+    'Warming up Next.js 15 compiler (port 2222) …',
     'Registering WebSocket Durable Objects …',
     'Mounting R2 storage bindings …',
     'Dev environment ready!',

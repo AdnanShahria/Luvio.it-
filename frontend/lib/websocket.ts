@@ -18,7 +18,7 @@ class WebSocketClient {
   private isIntentionallyClosed = false;
 
   constructor() {
-    this.url = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8788/ws';
+    this.url = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:2223/ws';
   }
 
   connect(token: string) {

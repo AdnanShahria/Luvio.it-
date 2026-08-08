@@ -8,7 +8,7 @@ export interface Env {
     DB: D1Database;
     R2_BUCKET: R2Bucket;
     HEALTH_STATE: KVNamespace;
-    SYNC_QUEUE: Queue;
+    SYNC_QUEUE?: Queue; // Optional — requires Cloudflare Workers Paid plan
     CHAT_ROOM: DurableObjectNamespace;
     JWT_SECRET: string;
     REFRESH_TOKEN_SECRET: string;
